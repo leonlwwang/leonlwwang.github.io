@@ -23,7 +23,7 @@
 
   font-family: var(--primary-font);
   line-height: 1.5;
-  
+
   color: var(--light-text);
   background-color: var(--light-theme);
   stroke: var(--light-text);
@@ -34,7 +34,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--secondary-font);
 }
 
@@ -68,14 +73,14 @@ ul[socials] svg {
   opacity: 0.6;
   transform: translateY(2px);
   transition: all 0.7s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 ul[socials] svg:hover {
   opacity: 1;
   transform: translateY(5px);
   transition: all 0.2s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 div[bar] {

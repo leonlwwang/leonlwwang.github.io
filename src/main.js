@@ -2,8 +2,7 @@ import './style.css'
 import { render } from './index/stippler.js'
 
 document.querySelector('div[index]').innerHTML = `
-  <h3 id="placeholder" style="padding-bottom: 4rem;">[Index]</h3>
-  <canvas stippler hidden></canvas>
+  <canvas stippler width='1000' height='1000'></canvas>
 `
 
 render(document.querySelector('canvas[stippler]'))
