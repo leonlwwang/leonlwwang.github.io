@@ -1,7 +1,7 @@
 import { inflate } from 'pako'
 
 export const render = async (canvas) => {
-  const path = '/src/assets/stippling.bin'
+  const path = '/src/index/stippling.bin'
   const rawBuffer = await load(path)
   if (!rawBuffer) {
     console.error('Failed to load buffer')
