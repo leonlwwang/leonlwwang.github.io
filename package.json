@@ -18,6 +18,7 @@
     "vite": "^5.3.4"
   },
   "dependencies": {
+    "gl-matrix": "^3.4.3",
     "pako": "^2.1.0"
   }
 }

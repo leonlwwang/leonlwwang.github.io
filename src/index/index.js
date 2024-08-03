@@ -1,4 +1,5 @@
 import { inflate } from 'pako'
+import { drawScene } from './stippler'
 
 export const render = async (canvas) => {
   // unpack stippling data from binary
@@ -33,7 +34,7 @@ export const render = async (canvas) => {
     uniformLocations: {
       projectionMatrix: gl.getUniformLocation(program, 'projectionMatrix'),
       modelViewMatrix: gl.getUniformLocation(program, 'modelViewMatrix'),
-    }
+    },
   }
   const buffer = initBuffer(gl, vertices)
 }
@@ -57,7 +58,7 @@ const load = async (path) => {
 
 const initShaders = async (gl) => {
   const importShader = async (gl, type, path) => {
-    const source = await fetch(path).then(response => response.text())
+    const source = await fetch(path).then((response) => response.text())
     const shader = gl.createShader(type)
     gl.shaderSource(shader, source)
     gl.compileShader(shader)
@@ -69,7 +70,11 @@ const initShaders = async (gl) => {
     return shader
   }
   const vertexShader = await importShader(gl, gl.VERTEX_SHADER, '/src/index/shaders/vertex.glsl')
-  const fragmentShader = await importShader(gl, gl.FRAGMENT_SHADER, '/src/index/shaders/fragment.glsl')
+  const fragmentShader = await importShader(
+    gl,
+    gl.FRAGMENT_SHADER,
+    '/src/index/shaders/fragment.glsl'
+  )
 
   const shaderProgram = gl.createProgram()
   gl.attachShader(shaderProgram, vertexShader)
