@@ -1,5 +1,5 @@
 import './style.css'
-import { render } from './index/stippler.js'
+import { render } from './index/index.js'
 
 document.querySelector('div[index]').innerHTML = `
   <canvas stippler width='1000' height='1000'></canvas>
