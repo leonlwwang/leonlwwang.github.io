@@ -1,4 +1,3 @@
-import { inflate } from 'pako'
 import { drawScene } from './stippler'
 
 export const render = async (canvas) => {
@@ -9,10 +8,10 @@ export const render = async (canvas) => {
     console.error('Failed to load buffer')
     return
   }
-  const vertices = inflate(arrBuffer)
+  const vertices = new Float32Array(arrBuffer)
   console.log(`Buffer loaded ${vertices.byteLength} bytes`)
 
-  // initialize WebGL context
+  // initialize gl context
   const gl = canvas.getContext('webgl')
   if (!gl) {
     console.error('WebGL not supported')
@@ -22,7 +21,7 @@ export const render = async (canvas) => {
   gl.clearColor(1.0, 0.933, 0.875, 1.0)
   gl.clear(gl.COLOR_BUFFER_BIT)
 
-  // configure shaders
+  // configure shaders and buffer
   const program = await initShaders(gl)
   console.log('Shaders initialized')
 
@@ -37,6 +36,7 @@ export const render = async (canvas) => {
     },
   }
   const buffer = initBuffer(gl, vertices)
+  drawScene(gl, programInfo, buffer)
 }
 
 const load = async (path) => {
@@ -90,6 +90,7 @@ const initShaders = async (gl) => {
 }
 
 const initBuffer = (gl, data) => {
+  // TODO: convert data coords to NDC before passing to buffer
   const positionBuffer = gl.createBuffer()
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
