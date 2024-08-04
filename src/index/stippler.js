@@ -1,4 +1,4 @@
-import { mat4 } from "gl-matrix"
+import { mat4 } from 'gl-matrix'
 
 export const drawScene = (gl, programInfo, buffer) => {
   gl.clearColor(1.0, 0.933, 0.875, 1.0)
