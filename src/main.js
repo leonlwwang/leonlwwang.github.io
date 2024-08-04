@@ -2,7 +2,7 @@ import './style.css'
 import { render } from './index/index.js'
 
 document.querySelector('div[index]').innerHTML = `
-  <canvas stippler width='1000' height='1000'></canvas>
+  <canvas stippler width='500' height='500'></canvas>
 `
 
 render(document.querySelector('canvas[stippler]'))

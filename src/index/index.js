@@ -90,11 +90,23 @@ const initShaders = async (gl) => {
 }
 
 const initBuffer = (gl, data) => {
-  // TODO: convert data coords to NDC before passing to buffer
+  const cartesianToNDC = (data) => {
+    const screenWidth = gl.canvas.width
+    const screenHeight = gl.canvas.height
+    for (let i = 0; i < data.length; i += 2) {
+      data[i] = (data[i] / screenWidth - 0.5) * 2
+      data[i + 1] = (data[i + 1] / screenHeight - 0.5) * 2
+      // clamp values to [-1, 1]
+      data[i] = Math.max(-1, Math.min(1, data[i]))
+      data[i + 1] = Math.max(-1, Math.min(1, data[i + 1]))
+    }
+    return data
+  }
+  
   const positionBuffer = gl.createBuffer()
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW)
+  gl.bufferData(gl.ARRAY_BUFFER, cartesianToNDC(data), gl.STATIC_DRAW)
 
   return {
     position: positionBuffer,
