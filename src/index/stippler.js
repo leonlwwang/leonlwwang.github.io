@@ -18,32 +18,19 @@ export const drawScene = (gl, programInfo, buffer) => {
 
   const modelViewMatrix = mat4.create()
 
-  mat4.translate(
-    projectionMatrix,
-    projectionMatrix,
-    [-0.0, 0.0, -3.0],
-  )
-
   setPositionAttribute(gl, buffer, programInfo)
 
   gl.useProgram(programInfo.program)
 
-  gl.uniformMatrix4fv(
-    programInfo.uniformLocations.projectionMatrix,
-    false,
-    modelViewMatrix,
-  )
+  gl.uniformMatrix4fv(programInfo.uniformLocations.projectionMatrix, false, modelViewMatrix)
 
-  gl.uniformMatrix4fv(
-    programInfo.uniformLocations.modelViewMatrix,
-    false,
-    modelViewMatrix,
-  )
+  gl.uniformMatrix4fv(programInfo.uniformLocations.modelViewMatrix, false, modelViewMatrix)
 
   const bufferByteSize = gl.getBufferParameter(gl.ARRAY_BUFFER, gl.BUFFER_SIZE)
 
   {
     const offset = 0
+    /* multiply 2 for (x, y) */
     const vertexCount = bufferByteSize / (2 * Float32Array.BYTES_PER_ELEMENT)
     gl.drawArrays(gl.POINTS, offset, vertexCount)
   }
@@ -63,7 +50,7 @@ const setPositionAttribute = (gl, buffer, programInfo) => {
     type,
     normalize,
     stride,
-    offset,
+    offset
   )
   gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition)
 }
