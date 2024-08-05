@@ -5,4 +5,5 @@ uniform mat4 projectionMatrix;
 
 void main() {
   gl_Position = projectionMatrix * modelViewMatrix * vertexPosition;
+  gl_PointSize = 1.0;
 }

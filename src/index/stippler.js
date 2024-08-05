@@ -17,4 +17,53 @@ export const drawScene = (gl, programInfo, buffer) => {
   mat4.perspective(projectionMatrix, fovy, aspect, near, far)
 
   const modelViewMatrix = mat4.create()
+
+  mat4.translate(
+    projectionMatrix,
+    projectionMatrix,
+    [-0.0, 0.0, -3.0],
+  )
+
+  setPositionAttribute(gl, buffer, programInfo)
+
+  gl.useProgram(programInfo.program)
+
+  gl.uniformMatrix4fv(
+    programInfo.uniformLocations.projectionMatrix,
+    false,
+    modelViewMatrix,
+  )
+
+  gl.uniformMatrix4fv(
+    programInfo.uniformLocations.modelViewMatrix,
+    false,
+    modelViewMatrix,
+  )
+
+  const bufferByteSize = gl.getBufferParameter(gl.ARRAY_BUFFER, gl.BUFFER_SIZE)
+
+  {
+    const offset = 0
+    const vertexCount = bufferByteSize / (2 * Float32Array.BYTES_PER_ELEMENT)
+    gl.drawArrays(gl.POINTS, offset, vertexCount)
+  }
+}
+
+const setPositionAttribute = (gl, buffer, programInfo) => {
+  const numComponents = 2
+  const type = gl.FLOAT
+  const normalize = false
+  const stride = 0
+  const offset = 0
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, buffer.position)
+  gl.vertexAttribPointer(
+    programInfo.attribLocations.vertexPosition,
+    numComponents,
+    type,
+    normalize,
+    stride,
+    offset,
+  )
+  gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition)
 }
