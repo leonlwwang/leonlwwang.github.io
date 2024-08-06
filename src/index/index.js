@@ -96,7 +96,7 @@ const initBuffer = (gl, data) => {
     const screenHeight = gl.canvas.height
     for (let i = 0; i < data.length; i += 2) {
       data[i] = (data[i] / screenWidth - 0.5) * 2
-      data[i + 1] = (data[i + 1] / screenHeight - 0.5) * 2
+      data[i + 1] = (data[i + 1] / screenHeight - 0.5) * -2
       // clamp values to [-1, 1]
       data[i] = Math.max(-1, Math.min(1, data[i]))
       data[i + 1] = Math.max(-1, Math.min(1, data[i + 1]))
