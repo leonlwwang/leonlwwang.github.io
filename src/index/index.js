@@ -1,4 +1,4 @@
-import { drawScene } from './stippler'
+import { drawScene, isMouseOverStippling } from './stippler'
 
 export const render = async (canvas) => {
   /* unpack stippling data from binary */
@@ -35,9 +35,17 @@ export const render = async (canvas) => {
       modelViewMatrix: gl.getUniformLocation(program, 'modelViewMatrix'),
     },
   }
-  const buffer = initBuffer(gl, vertices)
+  const verticesNDC = cartesianToNDC(gl, vertices)
+  const buffer = initBuffer(gl, verticesNDC)
 
   drawScene(gl, programInfo, buffer)
+
+  canvas.addEventListener('mousemove', (event) => {
+    const mousePosition = getNDCMousePosition(event, canvas)
+    if (isMouseOverStippling(mousePosition, verticesNDC)) {
+      //
+    }
+  })
 }
 
 const load = async (path) => {
@@ -91,25 +99,37 @@ const initShaders = async (gl) => {
 }
 
 const initBuffer = (gl, data) => {
-  const cartesianToNDC = (data) => {
-    const screenWidth = gl.canvas.width
-    const screenHeight = gl.canvas.height
-    for (let i = 0; i < data.length; i += 2) {
-      data[i] = (data[i] / screenWidth - 0.5) * 2
-      data[i + 1] = (data[i + 1] / screenHeight - 0.5) * -2
-      // clamp values to [-1, 1]
-      data[i] = Math.max(-1, Math.min(1, data[i]))
-      data[i + 1] = Math.max(-1, Math.min(1, data[i + 1]))
-    }
-    return data
-  }
-
   const positionBuffer = gl.createBuffer()
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer)
-  gl.bufferData(gl.ARRAY_BUFFER, cartesianToNDC(data), gl.STATIC_DRAW)
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW)
 
   return {
     position: positionBuffer,
   }
+}
+
+const cartesianToNDC = (gl, data) => {
+  const screenWidth = gl.canvas.width
+  const screenHeight = gl.canvas.height
+  for (let i = 0; i < data.length; i += 2) {
+    data[i] = (data[i] / screenWidth - 0.5) * 2
+    data[i + 1] = (data[i + 1] / screenHeight - 0.5) * -2
+    // clamp values to [-1, 1]
+    data[i] = Math.max(-1, Math.min(1, data[i]))
+    data[i + 1] = Math.max(-1, Math.min(1, data[i + 1]))
+  }
+  return data
+}
+
+const getNDCMousePosition = (event, canvas) => {
+  const rect = canvas.getBoundingClientRect()
+
+  const mouseX = event.clientX
+  const mouseY = event.clientY
+
+  const mouseNDCx = ((mouseX - rect.left) / canvas.width - 0.5) * 2
+  const mouseNDCy = (mouseY / canvas.height - 0.5) * -2
+
+  return { x: mouseNDCx, y: mouseNDCy }
 }
