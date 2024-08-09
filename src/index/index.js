@@ -1,9 +1,10 @@
-import { drawScene, isMouseOverStippling } from './stippler'
+import { drawScene } from './stippler'
+import { cartesianToNDC, getNDCMousePosition, isMouseOverStippling } from './util'
 
 export const render = async (canvas) => {
   /* unpack stippling data from binary */
   const path = '/src/index/stippling.bin'
-  const arrBuffer = await load(path)
+  const arrBuffer = await initData(path)
   if (!arrBuffer) {
     console.error('Failed to load buffer')
     return
@@ -48,7 +49,7 @@ export const render = async (canvas) => {
   })
 }
 
-const load = async (path) => {
+const initData = async (path) => {
   try {
     const response = await fetch(path)
     if (!response.ok) {
@@ -107,29 +108,4 @@ const initBuffer = (gl, data) => {
   return {
     position: positionBuffer,
   }
-}
-
-const cartesianToNDC = (gl, data) => {
-  const screenWidth = gl.canvas.width
-  const screenHeight = gl.canvas.height
-  for (let i = 0; i < data.length; i += 2) {
-    data[i] = (data[i] / screenWidth - 0.5) * 2
-    data[i + 1] = (data[i + 1] / screenHeight - 0.5) * -2
-    // clamp values to [-1, 1]
-    data[i] = Math.max(-1, Math.min(1, data[i]))
-    data[i + 1] = Math.max(-1, Math.min(1, data[i + 1]))
-  }
-  return data
-}
-
-const getNDCMousePosition = (event, canvas) => {
-  const rect = canvas.getBoundingClientRect()
-
-  const mouseX = event.clientX
-  const mouseY = event.clientY
-
-  const mouseNDCx = ((mouseX - rect.left) / canvas.width - 0.5) * 2
-  const mouseNDCy = (mouseY / canvas.height - 0.5) * -2
-
-  return { x: mouseNDCx, y: mouseNDCy }
 }
