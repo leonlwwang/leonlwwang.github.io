@@ -23,18 +23,4 @@ const getNDCMousePosition = (event, canvas) => {
   return { x: mouseNDCx, y: mouseNDCy }
 }
 
-const isMouseOverStippling = (mouse, vertices) => {
-  const epsilon = 1e-2
-  const intersections = []
-  for (let i = 0; i < vertices.length; i += 2) {
-    const dx = mouse.x - vertices[i]
-    const dy = mouse.y - vertices[i + 1]
-    const distance = Math.sqrt(dx * dx + dy * dy)
-    if (distance <= epsilon) {
-      intersections.push(i)
-    }
-  }
-  console.log(intersections)
-}
-
-export { cartesianToNDC, getNDCMousePosition, isMouseOverStippling }
+export { cartesianToNDC, getNDCMousePosition }
