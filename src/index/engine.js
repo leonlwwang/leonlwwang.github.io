@@ -1,8 +1,9 @@
-import { vec2 } from "gl-matrix"
-import { drawScene } from "./stippler"
-import { getNDCMousePosition } from "./util/ndc"
+import { vec2 } from 'gl-matrix'
+import { drawScene } from './stippler'
+import { getNDCMousePosition } from './util/ndc'
 
 export const loadPhysicsEngine = (gl, canvas, data) => {
+  let mouseVelocity = vec2.fromValues(0, 0)
   let velocities = new Array(data.length / 2)
   for (let i = 0; i < data.length / 2; i++) {
     velocities[i] = vec2.fromValues(0, 0)
@@ -25,6 +26,10 @@ export const loadPhysicsEngine = (gl, canvas, data) => {
     const mousePosition = getNDCMousePosition(event, canvas)
     const collisions = isMouseOverStippling(mousePosition, data)
     console.log(collisions)
+
+    // track when mouse starts moving and time it
+    // set an upper limit or how much energy can be
+    // accumulated for the mouse velocity vector
   })
 }
 
