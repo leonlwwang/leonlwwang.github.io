@@ -1,7 +1,8 @@
+import { C } from '../common/math/constants'
 import { drawScene } from './stippler'
-import { initBuffer } from './util/gl-setup'
-import { getNDCMousePosition } from './util/ndc'
-import { DOT_MASS, MOUSE_MASS, MOUSE_RANGE, MOUSE_TIMEOUT } from './util/constants'
+import { initBuffer } from '../common/gl-setup'
+import { getNDCMousePosition } from '../common/math/ndc'
+import { checkCollision, calcDisplacement } from '../common/math/physics'
 
 export const loadPhysicsEngine = (gl, programInfo, canvas, data) => {
   /* mouse physics */
@@ -22,11 +23,10 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, data) => {
       sampleTime !== 0 &&
       collisions.length !== 0
     ) {
-      const displacement = calculateDisplacement(forceVector, sampleTime)
-      // console.log(displacement.x, displacement.y)
-      for (let i = 0; i < collisions.length; i++) {
-        const xIndex = collisions[i]
-        const yIndex = collisions[i] + 1
+      const displacement = calcDisplacement(forceVector, sampleTime)
+      for (const index of collisions) {
+        const xIndex = index
+        const yIndex = index + 1
         data[xIndex] += displacement.x
         data[yIndex] += displacement.y
       }
@@ -41,13 +41,11 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, data) => {
   canvas.addEventListener('mousemove', (event) => {
     if (!mouseMove) {
       mouseMove = true
-      initialMoveTime = Date.now()
       previousMoveTime = Date.now()
     }
 
     const mousePosition = getNDCMousePosition(event, canvas)
-    collisions = isMouseOverStippling(mousePosition, data)
-    // console.log(collisions)
+    collisions = checkCollision(mousePosition, data)
 
     /* determine sampling rate */
     const currentMoveTime = Date.now()
@@ -63,8 +61,8 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, data) => {
       y: time !== 0 ? (velocity.y - prevMouseVelocity.y) / time : 0,
     }
     const force = {
-      x: MOUSE_MASS * acceleration.x,
-      y: MOUSE_MASS * acceleration.y,
+      x: C.MOUSE.MASS * acceleration.x,
+      y: C.MOUSE.MASS * acceleration.y,
     }
 
     sampleTime = time
@@ -74,39 +72,16 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, data) => {
     clearTimeout(movementTimer)
     movementTimer = setTimeout(() => {
       reset()
-    }, MOUSE_TIMEOUT)
+    }, C.MOUSE.TIMEOUT)
   })
 
   const reset = () => {
     mouseMove = false
     movementTimer = null
-    initialMoveTime = 0
     previousMoveTime = 0
     prevMouseVelocity = { x: 0, y: 0 }
     sampleTime = 0
     forceVector = { x: 0, y: 0 }
+    collisions = []
   }
-}
-
-const calculateDisplacement = (force, time) => {
-  const magnitude = Math.sqrt(force.x * force.x + force.y * force.y)
-  const totalDisplacement = (magnitude * (time * time)) / (2 * DOT_MASS)
-  const displacement = {
-    x: totalDisplacement * (force.x / magnitude),
-    y: totalDisplacement * (force.y / magnitude),
-  }
-  return displacement
-}
-
-const isMouseOverStippling = (mouse, vertices) => {
-  const collisions = []
-  for (let i = 0; i < vertices.length; i += 2) {
-    const dx = mouse.x - vertices[i]
-    const dy = mouse.y - vertices[i + 1]
-    const distance = Math.sqrt(dx * dx + dy * dy)
-    if (distance <= MOUSE_RANGE) {
-      collisions.push(i)
-    }
-  }
-  return collisions
 }
