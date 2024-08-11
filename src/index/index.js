@@ -38,9 +38,9 @@ export const render = async (canvas) => {
       modelViewMatrix: gl.getUniformLocation(program, 'modelViewMatrix'),
     },
   }
-  const verticesNDC = cartesianToNDC(gl, vertices)
+  let verticesNDC = cartesianToNDC(gl, vertices)
   const buffer = initBuffer(gl, verticesNDC)
 
   drawScene(gl, programInfo, buffer)
-  loadPhysicsEngine(gl, canvas, verticesNDC)
+  loadPhysicsEngine(gl, programInfo, canvas, verticesNDC)
 }
