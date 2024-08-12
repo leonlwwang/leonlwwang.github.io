@@ -1,40 +1,42 @@
-import { C } from '../common/math/constants'
+import { MOUSE_TIMEOUT, WEIGHT } from '../common/math/constants'
 import { drawScene } from './stippler'
 import { initBuffer } from '../common/gl-setup'
 import { getNDCMousePosition } from '../common/math/ndc'
-import { checkCollision, calcDisplacement } from '../common/math/physics'
+import { mouseCollisions, hitsWall, friction } from '../common/math/physics'
 
-export const loadPhysicsEngine = (gl, programInfo, canvas, data) => {
+export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   /* mouse physics */
   let mouseMove = false
   let movementTimer = null
   let previousMoveTime = 0
-  let prevMouseVelocity = { x: 0, y: 0 }
 
   /* collision physics */
-  let sampleTime = 0
-  let forceVector = { x: 0, y: 0 }
   let collisions = []
+  let mouseVelocity = { x: 0, y: 0 }
+  let velocities = new Float32Array(vertices.length)
 
   const animate = () => {
     requestAnimationFrame(animate)
-    if (
-      (forceVector.x !== 0 || forceVector.y !== 0) &&
-      sampleTime !== 0 &&
-      collisions.length !== 0
-    ) {
-      const displacement = calcDisplacement(forceVector, sampleTime)
-      for (const index of collisions) {
-        const xIndex = index
-        const yIndex = index + 1
-        data[xIndex] += displacement.x
-        data[yIndex] += displacement.y
-      }
 
-      /* reload buffer, re-render */
-      const newBuffer = initBuffer(gl, data)
-      drawScene(gl, programInfo, newBuffer)
+    /* update velocity if collisions found */
+    for (const index of collisions) {
+      const x = index
+      const y = index + 1
+      velocities[x] += mouseVelocity.x
+      velocities[y] += mouseVelocity.y
     }
+
+    /* update vertex positions */
+    for (let i = 0; i < vertices.length; i += 2) {
+      vertices[i] += friction(velocities[i])
+      vertices[i + 1] += friction(velocities[i + 1])
+      if (hitsWall(vertices[i])) velocities[i] *= -1
+      if (hitsWall(vertices[i + 1])) velocities[i + 1] *= -1
+    }
+
+    /* reload buffer and re-render */
+    const newBuffer = initBuffer(gl, vertices)
+    drawScene(gl, programInfo, newBuffer)
   }
   animate()
 
@@ -45,43 +47,27 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, data) => {
     }
 
     const mousePosition = getNDCMousePosition(event, canvas)
-    collisions = checkCollision(mousePosition, data)
+    collisions = mouseCollisions(mousePosition, vertices)
 
     /* determine sampling rate */
     const currentMoveTime = Date.now()
-    const time = currentMoveTime - previousMoveTime / 1000
+    const time = (currentMoveTime - previousMoveTime) * WEIGHT
     previousMoveTime = currentMoveTime
 
-    const velocity = {
-      x: time !== 0 ? mousePosition.x / time : 0,
-      y: time !== 0 ? mousePosition.y / time : 0,
-    }
-    const acceleration = {
-      x: time !== 0 ? (velocity.x - prevMouseVelocity.x) / time : 0,
-      y: time !== 0 ? (velocity.y - prevMouseVelocity.y) / time : 0,
-    }
-    const force = {
-      x: C.MOUSE.MASS * acceleration.x,
-      y: C.MOUSE.MASS * acceleration.y,
-    }
-
-    sampleTime = time
-    forceVector = force
-    prevMouseVelocity = { x: velocity.x, y: velocity.y }
+    mouseVelocity.x = time === 0 ? 0 : mousePosition.x / time,
+    mouseVelocity.y = time === 0 ? 0 : mousePosition.y / time,
 
     clearTimeout(movementTimer)
     movementTimer = setTimeout(() => {
       reset()
-    }, C.MOUSE.TIMEOUT)
+    }, MOUSE_TIMEOUT)
   })
 
   const reset = () => {
     mouseMove = false
     movementTimer = null
+    mouseVelocity.x = 0
+    mouseVelocity.y = 0
     previousMoveTime = 0
-    prevMouseVelocity = { x: 0, y: 0 }
-    sampleTime = 0
-    forceVector = { x: 0, y: 0 }
-    collisions = []
   }
 }

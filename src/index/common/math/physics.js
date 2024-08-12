@@ -1,26 +1,19 @@
-import { C } from "./constants"
+import { FRICTION, MOUSE_RANGE } from "./constants"
 
-const checkCollision = (mouse, vertices) => {
+const mouseCollisions = (mouse, vertices) => {
   const collisions = []
   for (let i = 0; i < vertices.length; i += 2) {
     const dx = mouse.x - vertices[i]
     const dy = mouse.y - vertices[i + 1]
     const distance = Math.sqrt(dx * dx + dy * dy)
-    if (distance <= C.MOUSE.RANGE) {
+    if (distance <= MOUSE_RANGE) {
       collisions.push(i)
     }
   }
   return collisions
 }
 
-const calcDisplacement = (force, time) => {
-  const magnitude = Math.sqrt(force.x * force.x + force.y * force.y)
-  const totalDisplacement = (magnitude * (time * time)) / (2 * C.DOT.MASS)
-  const displacement = {
-    x: totalDisplacement * (force.x / magnitude),
-    y: totalDisplacement * (force.y / magnitude),
-  }
-  return displacement
-}
+const hitsWall = (v) => { return v <= -1 || v >= 1 }
+const friction = (v) => { return v *= (1 - FRICTION) }
 
-export { checkCollision, calcDisplacement }
+export { mouseCollisions, hitsWall, friction }
