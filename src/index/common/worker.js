@@ -1,4 +1,3 @@
-import { loadBVH } from './math/bvh'
 import { MOUSE_RANGE } from './math/constants'
 import { hitsWall, friction, limit } from './math/physics'
 
