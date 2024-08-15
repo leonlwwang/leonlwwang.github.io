@@ -28,7 +28,11 @@ const initShaders = async (gl) => {
     }
     return shader
   }
-  const vertexShader = await importShader(gl, gl.VERTEX_SHADER, '/src/index/common/shaders/vertex.glsl')
+  const vertexShader = await importShader(
+    gl,
+    gl.VERTEX_SHADER,
+    '/src/index/common/shaders/vertex.glsl'
+  )
   const fragmentShader = await importShader(
     gl,
     gl.FRAGMENT_SHADER,

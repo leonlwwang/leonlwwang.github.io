@@ -20,7 +20,7 @@ const getNDCMousePosition = (event, canvas) => {
   const mouseNDCx = ((mouseX - rect.left) / canvas.width - 0.5) * 2
   const mouseNDCy = (mouseY / canvas.height - 0.5) * -2
 
-  return { x: mouseNDCx, y: mouseNDCy }
+  return new Float32Array([mouseNDCx, mouseNDCy])
 }
 
 export { cartesianToNDC, getNDCMousePosition }

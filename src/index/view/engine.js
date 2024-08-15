@@ -1,42 +1,44 @@
-import { MOUSE_TIMEOUT, WEIGHT } from '../common/math/constants'
+import { MOUSE_TIMEOUT, UINT_32, WEIGHT } from '../common/math/constants'
 import { drawScene } from './stippler'
 import { initBuffer } from '../common/gl-setup'
 import { getNDCMousePosition } from '../common/math/ndc'
-import { mouseCollisions, hitsWall, friction } from '../common/math/physics'
 
 export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
+  const worker = new Worker(new URL('../common/worker.js', import.meta.url), {
+    type: 'module',
+  })
+
   /* mouse physics */
   let mouseMove = false
   let movementTimer = null
   let previousMoveTime = 0
+  let mousePosition = new Float32Array([0, 0])
+  let mouseVelocity = new Float32Array([0, 0])
 
-  /* collision physics */
-  let collisions = []
-  let mouseVelocity = { x: 0, y: 0 }
-  let velocities = new Float32Array(vertices.length)
+  /* vertex physics */
+  const sharedVertexBuffer = new SharedArrayBuffer(vertices.byteLength)
+  const points = new Float32Array(sharedVertexBuffer)
+  points.set(vertices)
+  const sharedVelocityBuffer = new SharedArrayBuffer(vertices.byteLength)
+  const sharedCollisionsBuffer = new SharedArrayBuffer(UINT_32 * (points.length / 2))
 
   const animate = () => {
     requestAnimationFrame(animate)
-
-    /* update velocity if collisions found */
-    for (const index of collisions) {
-      const x = index
-      const y = index + 1
-      velocities[x] += mouseVelocity.x
-      velocities[y] += mouseVelocity.y
+    const mousePositionBuffer = mousePosition.buffer
+    const mouseVelocityBuffer = mouseVelocity.buffer
+    worker.postMessage({
+      sharedVertexBuffer,
+      sharedVelocityBuffer,
+      sharedCollisionsBuffer,
+      mousePositionBuffer,
+      mouseVelocityBuffer,
+    })
+    worker.onmessage = (event) => {
+      if (event.data) {
+        const newBuffer = initBuffer(gl, points)
+        drawScene(gl, programInfo, newBuffer)
+      }
     }
-
-    /* update vertex positions */
-    for (let i = 0; i < vertices.length; i += 2) {
-      vertices[i] += friction(velocities[i])
-      vertices[i + 1] += friction(velocities[i + 1])
-      if (hitsWall(vertices[i])) velocities[i] *= -1
-      if (hitsWall(vertices[i + 1])) velocities[i + 1] *= -1
-    }
-
-    /* reload buffer and re-render */
-    const newBuffer = initBuffer(gl, vertices)
-    drawScene(gl, programInfo, newBuffer)
   }
   animate()
 
@@ -46,16 +48,14 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
       previousMoveTime = Date.now()
     }
 
-    const mousePosition = getNDCMousePosition(event, canvas)
-    collisions = mouseCollisions(mousePosition, vertices)
-
     /* determine sampling rate */
     const currentMoveTime = Date.now()
     const time = (currentMoveTime - previousMoveTime) * WEIGHT
     previousMoveTime = currentMoveTime
 
-    mouseVelocity.x = time === 0 ? 0 : mousePosition.x / time,
-    mouseVelocity.y = time === 0 ? 0 : mousePosition.y / time,
+    mousePosition = getNDCMousePosition(event, canvas)
+    mouseVelocity[0] = time === 0 ? 0 : mousePosition[0] / time
+    mouseVelocity[1] = time === 0 ? 0 : mousePosition[1] / time
 
     clearTimeout(movementTimer)
     movementTimer = setTimeout(() => {
@@ -66,8 +66,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   const reset = () => {
     mouseMove = false
     movementTimer = null
-    mouseVelocity.x = 0
-    mouseVelocity.y = 0
+    mouseVelocity = new Float32Array([0, 0])
     previousMoveTime = 0
   }
 }
