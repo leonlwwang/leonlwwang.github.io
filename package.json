@@ -11,11 +11,11 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.0",
-    "eslint": "^9.7.0",
+    "@eslint/js": "^9.11.1",
+    "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "3.3.3",
-    "vite": "^5.3.4"
+    "vite": "^5.4.7"
   },
   "dependencies": {
     "gl-matrix": "^3.4.3"
