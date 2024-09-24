@@ -48,7 +48,5 @@ self.onmessage = (event) => {
     if (hitsWall(points[i + 1])) velocities[i + 1] *= -1
   }
 
-  /* bvh */
-
   postMessage(true)
 }

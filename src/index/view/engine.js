@@ -42,7 +42,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   }
   animate()
 
-  canvas.addEventListener('mousemove', (event) => {
+  canvas.addEventListener('pointermove', (event) => {
     if (!mouseMove) {
       mouseMove = true
       previousMoveTime = Date.now()
