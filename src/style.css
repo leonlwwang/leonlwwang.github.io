@@ -34,6 +34,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  cursor: url('/cursors/point.png'), auto;
+}
+
+a, button {
+  cursor: url('/cursors/hand_open.png'), pointer;
+}
+
 h1,
 h2,
 h3,
