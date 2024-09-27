@@ -42,6 +42,12 @@ a, button {
   cursor: url('/cursors/hand_open.png'), pointer;
 }
 
+canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 h1,
 h2,
 h3,
