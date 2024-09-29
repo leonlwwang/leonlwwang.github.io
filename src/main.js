@@ -17,9 +17,26 @@ const darkModeIcon = `
 
 let dark = false
 
+const enableDarkMode = () => {
+  const root = document.documentElement
+  root.classList.add('dark')
+}
+
+const disableDarkMode = () => {
+  const root = document.documentElement
+  root.classList.remove('dark')
+}
+
 const theme = document.querySelector('div[theme]')
 theme.addEventListener('click', () => {
   theme.innerHTML = dark ? lightModeIcon : darkModeIcon
+  if (dark) {
+    theme.innerHTML = lightModeIcon
+    disableDarkMode()
+  } else {
+    theme.innerHTML = darkModeIcon
+    enableDarkMode()
+  }
   dark = !dark
 })
 

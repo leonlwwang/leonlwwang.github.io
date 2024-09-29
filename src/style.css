@@ -27,6 +27,7 @@
   color: var(--light-text);
   background-color: var(--light-theme);
   stroke: var(--light-text);
+  transition: color 0.5s, background-color 0.5s, stroke 0.5s;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -109,5 +110,6 @@ div[bar] {
     color: var(--dark-text);
     background-color: var(--dark-theme);
     stroke: var(--dark-text);
+    transition: all 0.5s;
   }
 }
