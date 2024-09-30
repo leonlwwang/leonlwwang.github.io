@@ -2,6 +2,7 @@ import { drawScene } from './view/stippler'
 import { cartesianToNDC } from './common/math/ndc'
 import { loadPhysicsEngine } from './view/engine'
 import { initData, initShaders, initBuffer } from './common/gl-setup'
+import { loadTheme } from '../header/theme'
 
 export const render = async (canvas) => {
   /* unpack stippling data from binary */
@@ -21,12 +22,14 @@ export const render = async (canvas) => {
     return
   }
   console.log('WebGL context loaded')
-  gl.clearColor(1.0, 0.933, 0.875, 1.0)
-  gl.clear(gl.COLOR_BUFFER_BIT)
 
   /* configure shaders and buffer */
   const program = await initShaders(gl)
+  gl.useProgram(program)
   console.log('Shaders initialized')
+
+  /* get color and load theme toggler */
+  loadTheme(gl, program)
 
   const programInfo = {
     program,
