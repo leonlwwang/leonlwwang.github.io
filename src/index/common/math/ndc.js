@@ -18,7 +18,7 @@ const getNDCMousePosition = (event, canvas) => {
   const mouseY = event.clientY
 
   const mouseNDCx = ((mouseX - rect.left) / canvas.width - 0.5) * 2
-  const mouseNDCy = (mouseY / canvas.height - 0.5) * -2
+  const mouseNDCy = ((mouseY - rect.top) / canvas.height - 0.5) * -2
 
   return new Float32Array([mouseNDCx, mouseNDCy])
 }
