@@ -2,8 +2,12 @@ import { drawScene } from './view/stippler'
 import { cartesianToNDC } from './common/math/ndc'
 import { loadPhysicsEngine } from './view/engine'
 import { initData, initShaders, initBuffer } from './common/gl-setup'
+import { loadTheme } from '../header/theme'
 
 export const render = async (canvas) => {
+  /* prepare theme toggler for canvas */
+  loadTheme()
+
   /* unpack stippling data from binary */
   const path = '/src/index/stippling.bin'
   const arrBuffer = await initData(path)
