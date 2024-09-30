@@ -35,7 +35,7 @@ export const loadTheme = (gl, program) => {
       theme.innerHTML = lightModeIcon
       disableDarkMode()
     } else {
-      gl.uniform4f(colorLoc, 1.0, 1.0, 1.0, 1.0)
+      gl.uniform4f(colorLoc, 0.8, 0.8, 0.8, 1.0)
       theme.innerHTML = darkModeIcon
       enableDarkMode()
     }
