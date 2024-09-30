@@ -5,9 +5,6 @@ import { initData, initShaders, initBuffer } from './common/gl-setup'
 import { loadTheme } from '../header/theme'
 
 export const render = async (canvas) => {
-  /* prepare theme toggler for canvas */
-  loadTheme()
-
   /* unpack stippling data from binary */
   const path = '/src/index/stippling.bin'
   const arrBuffer = await initData(path)
@@ -25,12 +22,14 @@ export const render = async (canvas) => {
     return
   }
   console.log('WebGL context loaded')
-  gl.clearColor(1.0, 0.933, 0.875, 1.0)
-  gl.clear(gl.COLOR_BUFFER_BIT)
 
   /* configure shaders and buffer */
   const program = await initShaders(gl)
+  gl.useProgram(program)
   console.log('Shaders initialized')
+
+  /* get color and load theme toggler */
+  loadTheme(gl, program)
 
   const programInfo = {
     program,

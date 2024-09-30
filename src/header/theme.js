@@ -24,14 +24,18 @@ const disableDarkMode = () => {
   root.classList.remove('dark')
 }
 
-export const loadTheme = () => {
+export const loadTheme = (gl, program) => {
+  const colorLoc = gl.getUniformLocation(program, 'color')
   const theme = document.querySelector('div[theme]')
+  gl.uniform4f(colorLoc, 0.0, 0.0, 0.0, 1.0)
   theme.addEventListener('click', () => {
     theme.innerHTML = dark ? lightModeIcon : darkModeIcon
     if (dark) {
+      gl.uniform4f(colorLoc, 0.0, 0.0, 0.0, 1.0)
       theme.innerHTML = lightModeIcon
       disableDarkMode()
     } else {
+      gl.uniform4f(colorLoc, 1.0, 1.0, 1.0, 1.0)
       theme.innerHTML = darkModeIcon
       enableDarkMode()
     }
