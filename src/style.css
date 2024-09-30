@@ -39,6 +39,10 @@ body {
   cursor: url('/cursors/point.png'), auto;
 }
 
+header {
+  padding: 1.5rem;
+}
+
 a, button {
   cursor: url('/cursors/hand_open.png'), pointer;
 }
@@ -64,6 +68,10 @@ p {
 
 svg {
   stroke: inherit;
+}
+
+div[theme] {
+  text-align: right;
 }
 
 div[container] {
