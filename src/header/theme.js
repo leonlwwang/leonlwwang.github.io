@@ -40,5 +40,5 @@ export const loadTheme = (gl, program) => {
       gl.uniform4f(colorLoc, 0.0, 0.0, 0.0, 1.0)
     }
     dark = !dark
-  })  
+  })
 }

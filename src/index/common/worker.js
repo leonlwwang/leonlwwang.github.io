@@ -1,5 +1,5 @@
-import { MOUSE_RANGE } from './math/constants'
-import { hitsWall, friction, limit } from './math/physics'
+import { MOUSE_RANGE } from '/src/index/common/math/constants'
+import { hitsWall, friction, limit } from '/src/index/common/math/physics'
 
 self.onmessage = (event) => {
   const {

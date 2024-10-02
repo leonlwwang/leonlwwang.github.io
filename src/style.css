@@ -27,7 +27,10 @@
   color: var(--light-text);
   background-color: var(--light-theme);
   stroke: var(--light-text);
-  transition: color 0.5s, background-color 0.5s, stroke 0.5s;
+  transition:
+    color 0.5s,
+    background-color 0.5s,
+    stroke 0.5s;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -43,7 +46,8 @@ header {
   padding: 1.5rem;
 }
 
-a, button {
+a,
+button {
   cursor: url('/cursors/hand_open.png'), pointer;
 }
 
