@@ -13,6 +13,12 @@ export default [
   {
     rules: {
       'no-undef': 0,
+      'no-restricted-imports': [
+        2,
+        {
+          patterns: ['./*', '../*'],
+        },
+      ],
     },
   },
 ]
