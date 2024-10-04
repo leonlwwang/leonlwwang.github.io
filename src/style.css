@@ -54,7 +54,8 @@ header {
 }
 
 a,
-button {
+button,
+svg[theme-btn] {
   cursor: url('/cursors/hand_open.png'), pointer;
   color: inherit;
 }
@@ -118,6 +119,12 @@ canvas[stippler] {
   padding: 1rem;
   margin-left: 10%;
   margin-right: 1%;
+}
+
+button[resume] {
+  background: none;
+  border: none;
+  font: inherit;
 }
 
 ul[socials] {
