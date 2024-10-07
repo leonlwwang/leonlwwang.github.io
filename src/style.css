@@ -102,22 +102,22 @@ div[row] {
 }
 
 div[about-me] > h1 {
-  font-size: 72px;
+  font-size: 5vw;
 }
 
 div[about-me] > p {
-  font-size: 16px;
+  font-size: 2vh;
 }
 
 div[about-me] {
   padding: 1rem;
-  margin-right: 10%;
+  margin-right: 5%;
   margin-left: 2%;
 }
 
 canvas[stippler] {
   padding: 1rem;
-  margin-left: 10%;
+  margin-left: 5%;
   margin-right: 2%;
 }
 
@@ -127,7 +127,7 @@ button[resume] {
   border-color: inherit;
   font: inherit;
   font-size: 14px;
-  padding: 25px 60px 25px 60px;
+  padding: 1vw 5vw 1vw 5vw;
   background-size: 200% 100%;
   background-color: inherit;
   transition: background-position 0.5s;
@@ -180,5 +180,47 @@ div[bar] {
     background-color: var(--dark-theme);
     stroke: var(--dark-text);
     transition: all 0.5s;
+  }
+}
+
+@media only screen and (min-aspect-ratio: 6 / 3) {
+  div[about-me] > h1 {
+    font-size: 12vh;
+  }
+
+  div[about-me] > p {
+    font-size: 1vw;
+  }
+
+  button[resume] {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-aspect-ratio: 4 / 3) {
+  header {
+    padding: 0.5rem
+  }
+
+  div[row] {
+    flex-direction: column;
+  }
+
+  div[about-me] {
+    text-align: center;
+    margin: 0;
+  }
+
+  div[about-me] > h1 {
+    font-size: 10vw;
+  }
+
+  div[about-me] > p {
+    font-size: 2vh;
+  }
+  
+  canvas[stippler] {
+    padding: 0;
+    margin: 0;
   }
 }
