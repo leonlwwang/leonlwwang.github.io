@@ -55,7 +55,8 @@ header {
 
 a,
 button,
-svg[theme-btn] {
+svg[theme-btn],
+img[pow-block] {
   cursor: url('/cursors/hand_open.png'), pointer;
   color: inherit;
 }
@@ -140,6 +141,10 @@ button[resume]:hover {
   background-position: -100% 0;
   transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
   transition-duration: 0.3s;
+}
+
+img[pow-block] {
+  border: 1px solid rgba(0.145, 0.145, 0.145, 0.7);
 }
 
 ul[socials] {
