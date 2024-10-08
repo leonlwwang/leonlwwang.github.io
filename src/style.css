@@ -55,7 +55,8 @@ header {
 
 a,
 button,
-svg[theme-btn] {
+svg[theme-btn],
+img[pow-block] {
   cursor: url('/cursors/hand_open.png'), pointer;
   color: inherit;
 }
@@ -142,6 +143,10 @@ button[resume]:hover {
   transition-duration: 0.3s;
 }
 
+img[pow-block] {
+  border: 1px solid rgba(0.145, 0.145, 0.145, 0.7);
+}
+
 ul[socials] {
   display: flex;
   list-style: none;
@@ -156,14 +161,18 @@ ul[socials] > li {
 ul[socials] svg {
   opacity: 0.75;
   transform: translateY(2px);
-  transition: opacity 0.7s, transform 0.7s;
+  transition:
+    opacity 0.7s,
+    transform 0.7s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 ul[socials] svg:hover {
   opacity: 1;
   transform: translateY(5px);
-  transition: opacity 0.2s, transform 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -199,7 +208,7 @@ div[bar] {
 
 @media only screen and (max-aspect-ratio: 4 / 3) {
   header {
-    padding: 0.5rem
+    padding: 0.5rem;
   }
 
   div[row] {
@@ -218,7 +227,7 @@ div[bar] {
   div[about-me] > p {
     font-size: 2vh;
   }
-  
+
   canvas[stippler] {
     padding: 0;
     margin: 0;
