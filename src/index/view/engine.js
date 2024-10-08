@@ -1,7 +1,14 @@
 import { MOUSE_TIMEOUT, UINT_32, WEIGHT } from '/src/index/common/math/constants'
 import { drawScene } from '/src/index/view/stippler'
 import { initBuffer } from '/src/index/common/gl-setup'
-import { getNDCMousePosition } from '/src/index/common/math/ndc'
+import { getNDCMousePosition, getPointerLocation } from '/src/index/common/math/utils'
+
+let gravity = false
+
+export const enableGravity = (event) => {
+  getPointerLocation(event)
+  gravity = true
+}
 
 export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   const worker = new Worker(new URL('/src/index/common/worker.js', import.meta.url), {
