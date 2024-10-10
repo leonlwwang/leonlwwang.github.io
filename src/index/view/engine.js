@@ -23,6 +23,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   let mouseVelocity = new Float32Array([0, 0])
 
   /* vertex physics */
+  const gravityFlag = new Int8Array([0])
   const sharedVertexBuffer = new SharedArrayBuffer(vertices.byteLength)
   const points = new Float32Array(sharedVertexBuffer)
   points.set(vertices)
@@ -31,14 +32,17 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
 
   const animate = () => {
     requestAnimationFrame(animate)
+    if (gravity) gravityFlag[0] = 1
     const mousePositionBuffer = mousePosition.buffer
     const mouseVelocityBuffer = mouseVelocity.buffer
+    const gravityBuffer = gravityFlag.buffer
     worker.postMessage({
       sharedVertexBuffer,
       sharedVelocityBuffer,
       sharedCollisionsBuffer,
       mousePositionBuffer,
       mouseVelocityBuffer,
+      gravityBuffer,
     })
     worker.onmessage = (event) => {
       if (event.data) {

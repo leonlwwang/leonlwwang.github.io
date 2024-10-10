@@ -1,4 +1,4 @@
-import { MOUSE_RANGE } from '/src/index/common/math/constants'
+import { MOUSE_RANGE, GRAVITY } from '/src/index/common/math/constants'
 import { hitsWall, friction, limit } from '/src/index/common/math/physics'
 
 self.onmessage = (event) => {
@@ -8,6 +8,7 @@ self.onmessage = (event) => {
     sharedCollisionsBuffer,
     mousePositionBuffer,
     mouseVelocityBuffer,
+    gravityBuffer,
   } = event.data
 
   const points = new Float32Array(sharedVertexBuffer)
@@ -15,6 +16,7 @@ self.onmessage = (event) => {
   const collisions = new Uint32Array(sharedCollisionsBuffer)
   const mousePosition = new Float32Array(mousePositionBuffer)
   const mouseVelocity = new Float32Array(mouseVelocityBuffer)
+  const gravity = new Int8Array(gravityBuffer)
 
   /* get collisions */
   let j = 0
@@ -42,10 +44,16 @@ self.onmessage = (event) => {
   for (let i = 0; i < points.length; i += 2) {
     velocities[i] = friction(limit(velocities[i]))
     velocities[i + 1] = friction(limit(velocities[i + 1]))
+    if (gravity[0] == 1) {
+      velocities[i + 1] += GRAVITY
+    }
     points[i] += velocities[i]
     points[i + 1] += velocities[i + 1]
     if (hitsWall(points[i])) velocities[i] *= -1
     if (hitsWall(points[i + 1])) velocities[i + 1] *= -1
+    if (points[i + 1] < -1) {
+      points[i + 1] = -1
+    }
   }
 
   postMessage(true)

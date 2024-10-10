@@ -1,6 +1,7 @@
 export const MOUSE_RANGE = 0.035
 export const MOUSE_TIMEOUT = 100
 
+export const GRAVITY = -1e-4
 export const FRICTION = 0.005
 export const WEIGHT = 100
 export const VELOCITY_MAX = 0.005
