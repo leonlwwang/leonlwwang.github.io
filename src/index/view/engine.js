@@ -1,7 +1,14 @@
 import { MOUSE_TIMEOUT, UINT_32, WEIGHT } from '/src/index/common/math/constants'
 import { drawScene } from '/src/index/view/stippler'
 import { initBuffer } from '/src/index/common/gl-setup'
-import { getNDCMousePosition } from '/src/index/common/math/ndc'
+import { getNDCMousePosition, getPointerLocation } from '/src/index/common/math/utils'
+
+let gravity = false
+
+export const enableGravity = (event) => {
+  getPointerLocation(event)
+  gravity = true
+}
 
 export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   const worker = new Worker(new URL('/src/index/common/worker.js', import.meta.url), {
@@ -16,6 +23,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   let mouseVelocity = new Float32Array([0, 0])
 
   /* vertex physics */
+  const gravityFlag = new Int8Array([0])
   const sharedVertexBuffer = new SharedArrayBuffer(vertices.byteLength)
   const points = new Float32Array(sharedVertexBuffer)
   points.set(vertices)
@@ -24,14 +32,17 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
 
   const animate = () => {
     requestAnimationFrame(animate)
+    if (gravity) gravityFlag[0] = 1
     const mousePositionBuffer = mousePosition.buffer
     const mouseVelocityBuffer = mouseVelocity.buffer
+    const gravityBuffer = gravityFlag.buffer
     worker.postMessage({
       sharedVertexBuffer,
       sharedVelocityBuffer,
       sharedCollisionsBuffer,
       mousePositionBuffer,
       mouseVelocityBuffer,
+      gravityBuffer,
     })
     worker.onmessage = (event) => {
       if (event.data) {

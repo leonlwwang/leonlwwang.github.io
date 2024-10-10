@@ -23,4 +23,17 @@ const getNDCMousePosition = (event, canvas) => {
   return new Float32Array([mouseNDCx, mouseNDCy])
 }
 
-export { cartesianToNDC, getNDCMousePosition }
+const getPointerLocation = (event) => {
+  if (event.type === 'drop') {
+    const x = event.clientX
+    const y = event.clientY
+    console.log(x, y)
+  } else if (event.type === 'touchend') {
+    const touch = event.changedTouches[0]
+    const x = touch.clientX + window.scrollX
+    const y = touch.clientY + window.scrollY
+    console.log(x, y)
+  }
+}
+
+export { cartesianToNDC, getNDCMousePosition, getPointerLocation }

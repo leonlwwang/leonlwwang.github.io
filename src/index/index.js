@@ -1,5 +1,5 @@
 import { drawScene } from '/src/index/view/stippler'
-import { cartesianToNDC } from '/src/index/common/math/ndc'
+import { cartesianToNDC } from '/src/index/common/math/utils'
 import { loadPhysicsEngine } from '/src/index/view/engine'
 import { initData, initShaders, initBuffer } from '/src/index/common/gl-setup'
 import { loadTheme } from '/src/header/theme'
