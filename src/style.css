@@ -143,8 +143,27 @@ button[resume]:hover {
   transition-duration: 0.3s;
 }
 
-img[pow-block] {
-  border: 1px solid rgba(0.145, 0.145, 0.145, 0.7);
+div[toolbar] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+div[toolbar] > img {
+  margin-right: 16px;
+}
+
+div[toolbar] > ul {
+  padding: 0;
+  border: 1px solid;
+  display: flex;
+  list-style: none;
+}
+
+div[toolbar] li {
+  padding: 0;
+  line-height: 0;
 }
 
 ul[socials] {
