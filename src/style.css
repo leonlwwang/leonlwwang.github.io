@@ -155,8 +155,16 @@ div[toolbar] > img {
   margin-right: 16px;
 }
 
-div[toolbar] > ul {
+div[toolbar] > ul.closed {
   visibility: hidden;
+  padding: 0;
+  border: 1px solid;
+  display: flex;
+  list-style: none;
+}
+
+div[toolbar] > ul.open {
+  visibility: visible;
   padding: 0;
   border: 1px solid;
   display: flex;

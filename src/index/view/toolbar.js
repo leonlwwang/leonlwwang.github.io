@@ -8,10 +8,10 @@ export const enableToolbar = (toolbar) => {
     opened = !opened
     if (opened) {
       toggle.src = '/assets/usedblock.svg'
-      tools.style.visibility = 'visible'
+      tools.className = 'open'
     } else {
       toggle.src = '/assets/block.svg'
-      tools.style.visibility = 'hidden'
+      tools.className = 'closed'
     }
   })
 }
