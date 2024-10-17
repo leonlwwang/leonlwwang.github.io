@@ -4,6 +4,7 @@ import { render } from '/src/index/index.js'
 import { loadPage } from '/src/router.js'
 import { enableDragDrop } from '/src/index/view/draggable'
 import { enableGravity } from '/src/index/view/engine'
+import { enableToolbar } from '/src/index/view/toolbar'
 
 await loadPage('/src/index/profile.html', 'div[index]').then(() => {
   colorBtn()
@@ -12,6 +13,7 @@ await loadPage('/src/index/profile.html', 'div[index]').then(() => {
     document.querySelector('canvas[stippler]'),
     enableGravity,
   )
+  enableToolbar(document.querySelector('div[toolbar]'))
   render(document.querySelector('canvas[stippler]'))
 })
 

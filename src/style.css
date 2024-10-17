@@ -56,7 +56,8 @@ header {
 a,
 button,
 svg[theme-btn],
-img[pow-block] {
+img[pow-block],
+div[toolbar] > img:hover {
   cursor: url('/cursors/hand_open.png'), pointer;
   color: inherit;
 }
@@ -155,6 +156,7 @@ div[toolbar] > img {
 }
 
 div[toolbar] > ul {
+  visibility: hidden;
   padding: 0;
   border: 1px solid;
   display: flex;
