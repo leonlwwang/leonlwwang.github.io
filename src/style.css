@@ -86,7 +86,71 @@ svg {
 }
 
 div[theme] {
+  max-height: 24px;
   text-align: right;
+}
+
+div[toolbar] {
+  max-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
+}
+
+div[toolbar] > svg  {
+  margin-right: 16px;
+}
+
+div[toolbar] > ul.closed {
+  opacity: 0;
+  padding: 0;
+  padding-right: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  width: 1px;
+  border: 1px solid;
+  display: flex;
+  list-style: none;
+  transition: width, padding-right, opacity;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 0.4s;
+}
+
+div[toolbar] > ul.open {
+  opacity: 1;
+  padding: 0;
+  padding-right: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  width: 88px;
+  padding-inline-start: 0px;
+  border: 1px solid;
+  display: flex;
+  list-style: none;
+  transition: width, padding-right, opacity;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 0.4s;
+}
+
+div[toolbar] > ul > li > img {
+  height: 22px;
+  transition: height;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 0.4s;
+}
+
+div[toolbar] > ul > li > img:hover {
+  height: 44px;
+  width: auto;
+  transition: height;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 0.4s;
+}
+
+div[toolbar] li {
+  padding: 0;
+  line-height: 0;
 }
 
 div[container] {
@@ -144,62 +208,6 @@ button[resume]:hover {
   transition-duration: 0.3s;
 }
 
-div[toolbar] {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-div[toolbar] > img {
-  margin-right: 16px;
-}
-
-div[toolbar] > ul > li > img {
-  transform: scale(0.5);
-  transition: transform;
-  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
-  transition-duration: 0.4s;
-}
-
-div[toolbar] > ul > li:hover img {
-  transform: scale(1);
-  transition: transform;
-  transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
-  transition-duration: 0.2s;
-}
-
-div[toolbar] > ul.closed {
-  opacity: 0;
-  padding: 0;
-  padding-right: 0;
-  width: 1px;
-  border: 1px solid;
-  display: flex;
-  list-style: none;
-  transition: width, padding-right, opacity;
-  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
-  transition-duration: 0.4s;
-}
-
-div[toolbar] > ul.open {
-  opacity: 1;
-  padding: 0;
-  padding-right: 0;
-  width: 250px;
-  padding-inline-start: 0px;
-  border: 1px solid;
-  display: flex;
-  list-style: none;
-  transition: width, padding-right, opacity;
-  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
-  transition-duration: 0.4s;
-}
-
-div[toolbar] li {
-  padding: 0;
-  line-height: 0;
-}
 
 ul[socials] {
   display: flex;
@@ -265,7 +273,7 @@ div[bar] {
     padding: 0.5rem;
   }
 
-  div[row] {
+  #profile {
     flex-direction: column;
   }
 
