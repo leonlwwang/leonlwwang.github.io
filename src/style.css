@@ -98,7 +98,7 @@ div[toolbar] {
   justify-content: left;
 }
 
-div[toolbar] > svg  {
+div[toolbar] > svg {
   margin-right: 16px;
 }
 
@@ -207,7 +207,6 @@ button[resume]:hover {
   transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
   transition-duration: 0.3s;
 }
-
 
 ul[socials] {
   display: flex;

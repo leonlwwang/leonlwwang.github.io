@@ -11,7 +11,7 @@ await loadPage('/src/index/profile.html', 'div[index]').then(() => {
   enableDragDrop(
     document.querySelector('img[pow-block]'),
     document.querySelector('canvas[stippler]'),
-    enableGravity,
+    enableGravity
   )
   enableToolbar(document.querySelector('div[toolbar]'))
   render(document.querySelector('canvas[stippler]'))
