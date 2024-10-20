@@ -56,7 +56,8 @@ header {
 a,
 button,
 svg[theme-btn],
-img[pow-block] {
+img[pow-block],
+div[toolbar] > img:hover {
   cursor: url('/cursors/hand_open.png'), pointer;
   color: inherit;
 }
@@ -85,7 +86,71 @@ svg {
 }
 
 div[theme] {
+  max-height: 24px;
   text-align: right;
+}
+
+div[toolbar] {
+  max-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
+}
+
+div[toolbar] > svg {
+  margin-right: 16px;
+}
+
+div[toolbar] > ul.closed {
+  opacity: 0;
+  padding: 0;
+  padding-right: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  width: 1px;
+  border: 1px solid;
+  display: flex;
+  list-style: none;
+  transition: width, padding-right, opacity;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 0.4s;
+}
+
+div[toolbar] > ul.open {
+  opacity: 1;
+  padding: 0;
+  padding-right: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  width: 88px;
+  padding-inline-start: 0px;
+  border: 1px solid;
+  display: flex;
+  list-style: none;
+  transition: width, padding-right, opacity;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 0.4s;
+}
+
+div[toolbar] > ul > li > img {
+  height: 22px;
+  transition: height;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 0.4s;
+}
+
+div[toolbar] > ul > li > img:hover {
+  height: 44px;
+  width: auto;
+  transition: height;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 0.4s;
+}
+
+div[toolbar] li {
+  padding: 0;
+  line-height: 0;
 }
 
 div[container] {
@@ -141,10 +206,6 @@ button[resume]:hover {
   background-position: -100% 0;
   transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
   transition-duration: 0.3s;
-}
-
-img[pow-block] {
-  border: 1px solid rgba(0.145, 0.145, 0.145, 0.7);
 }
 
 ul[socials] {
@@ -211,7 +272,7 @@ div[bar] {
     padding: 0.5rem;
   }
 
-  div[row] {
+  #profile {
     flex-direction: column;
   }
 
