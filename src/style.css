@@ -55,9 +55,9 @@ header {
 
 a,
 button,
+svg[gift],
 svg[theme-btn],
-img[pow-block],
-div[toolbar] > img:hover {
+img[pow-block] {
   cursor: url('/cursors/hand_open.png'), pointer;
   color: inherit;
 }
@@ -85,6 +85,31 @@ svg {
   stroke: inherit;
 }
 
+@keyframes shake {
+  0% { transform: translateX(0) translateY(0); }
+  5% { transform: translateX(-5px) translateY(-2px); }
+  10% { transform: translateX(5px) translateY(2px); }
+  15% { transform: translateX(-5px) translateY(-3px); }
+  20% { transform: translateX(5px) translateY(3px); }
+  25% { transform: translateX(-5px) translateY(-2px); }
+  30% { transform: translateX(5px) translateY(2px); }
+  40% { transform: translateX(-4px) translateY(1px); }
+  50% { transform: translateX(4px) translateY(-1px); }
+  60% { transform: translateX(-3px) translateY(0); }
+  70% { transform: translateX(3px) translateY(1px); }
+  80% { transform: translateX(-2px) translateY(0); }
+  90% { transform: translateX(2px) translateY(-1px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+.shake {
+  animation: shake 1s ease-in-out;
+}
+
+img[pow-block] {
+  border: 1px solid black;
+}
+
 div[theme] {
   max-height: 24px;
   text-align: right;
@@ -94,63 +119,8 @@ div[toolbar] {
   max-height: 24px;
   display: flex;
   flex-direction: row;
-  align-items: left;
+  align-items: center;
   justify-content: left;
-}
-
-div[toolbar] > svg {
-  margin-right: 16px;
-}
-
-div[toolbar] > ul.closed {
-  opacity: 0;
-  padding: 0;
-  padding-right: 0;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  width: 1px;
-  border: 1px solid;
-  display: flex;
-  list-style: none;
-  transition: width, padding-right, opacity;
-  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
-  transition-duration: 0.4s;
-}
-
-div[toolbar] > ul.open {
-  opacity: 1;
-  padding: 0;
-  padding-right: 0;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  width: 88px;
-  padding-inline-start: 0px;
-  border: 1px solid;
-  display: flex;
-  list-style: none;
-  transition: width, padding-right, opacity;
-  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
-  transition-duration: 0.4s;
-}
-
-div[toolbar] > ul > li > img {
-  height: 22px;
-  transition: height;
-  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
-  transition-duration: 0.4s;
-}
-
-div[toolbar] > ul > li > img:hover {
-  height: 44px;
-  width: auto;
-  transition: height;
-  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
-  transition-duration: 0.4s;
-}
-
-div[toolbar] li {
-  padding: 0;
-  line-height: 0;
 }
 
 div[container] {

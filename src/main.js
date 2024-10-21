@@ -4,7 +4,7 @@ import { render } from '/src/index/index.js'
 import { loadPage } from '/src/router.js'
 import { enableDragDrop } from '/src/index/view/draggable'
 import { enableGravity } from '/src/index/view/engine'
-import { enableToolbar } from '/src/header/toolbar'
+import { enableToolbar } from '/src/header/gift'
 
 await loadPage('/src/index/profile.html', 'div[index]').then(() => {
   colorBtn()
