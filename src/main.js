@@ -7,7 +7,9 @@ import { enableGravity } from '/src/index/view/engine'
 import { enableToolbar } from '/src/header/gift'
 
 await loadPage('/src/index/profile.html', 'div[index]').then(() => {
-  colorBtn()
+  if (!window.matchMedia('(pointer: coarse)').matches) {
+    colorBtn()
+  }
   enableDragDrop(
     document.querySelector('img[pow-block]'),
     document.querySelector('canvas[stippler]'),
