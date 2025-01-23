@@ -1,7 +1,13 @@
 export const query = `
-  query($after: String) {
+  query ($after: String) {
     user(login: "leonlwwang") {
-      repositories(first: 9, after: $after, ownerAffiliations: OWNER, orderBy: {field: PUSHED_AT, direction: DESC}) {
+      repositories(
+        first: 9
+        after: $after
+        ownerAffiliations: OWNER
+        privacy: PUBLIC
+        orderBy: { field: PUSHED_AT, direction: DESC }
+      ) {
         nodes {
           name
           description
