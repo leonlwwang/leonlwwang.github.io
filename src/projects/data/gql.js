@@ -1,4 +1,4 @@
-export const query = `
+export const repoQuery = `
   query ($after: String) {
     user(login: "leonlwwang") {
       repositories(
