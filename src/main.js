@@ -5,6 +5,11 @@ import { loadPage } from '/src/router.js'
 import { enableDragDrop } from '/src/index/view/draggable'
 import { enableGravity } from '/src/index/view/engine'
 import { enableToolbar } from '/src/header/gift'
+import { useRepositoryStore } from '/src/projects/data/store'
+import { query } from '/src/projects/data/gql'
+
+const repositoryStore = useRepositoryStore.getState()
+repositoryStore.searchRepositories(query)
 
 await loadPage('/src/index/profile.html', 'div[index]').then(() => {
   if (!window.matchMedia('(pointer: coarse)').matches) {
@@ -19,4 +24,10 @@ await loadPage('/src/index/profile.html', 'div[index]').then(() => {
   render(document.querySelector('canvas[stippler]'))
 })
 
-await loadPage('/src/projects/projects.html', 'div[projects]')
+await loadPage('/src/projects/projects.html', 'div[projects]').then(() => {
+  useRepositoryStore.subscribe((state) => {
+    if (state.repositories) {
+      console.log(state.repositories)
+    }
+  })
+})

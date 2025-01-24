@@ -1,13 +1,11 @@
-import { repoQuery } from '/src/projects/data/gql.js'
-
 let after = null
 
-export const searchRepositories = () => {
-  const gqlResponse = query(repoQuery)
+export const searchRepositories = (gqlQuery) => {
+  const gqlResponse = query(gqlQuery)
   return gqlResponse
 }
 
-const query = async (gqlQuery) => {
+const query = async (query) => {
   const response = await fetch('https://api.github.com/graphql', {
     method: 'POST',
     headers: {
@@ -15,7 +13,7 @@ const query = async (gqlQuery) => {
       Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`
     },
     body: JSON.stringify({
-      query: gqlQuery,
+      query: query,
       variables: { after },
     }),
   })
