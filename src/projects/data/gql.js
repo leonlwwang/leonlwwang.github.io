@@ -13,18 +13,12 @@ export const query = `
           description
           createdAt
           pushedAt
-          owner {
-            login
-          }
-          isFork
           languages(first: 3) {
             edges {
-              size
               node {
                 name
               }
             }
-            totalSize
           }
         }
         pageInfo {
