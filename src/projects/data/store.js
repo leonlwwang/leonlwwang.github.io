@@ -46,7 +46,7 @@ export const useRepositoryStore = createStore((set) => ({
           errors: error,
         })
       })
-  }
+  },
 }))
 
 const enrichRepositoryData = (data) => {

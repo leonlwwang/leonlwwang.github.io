@@ -10,7 +10,7 @@ const query = async (query) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`
+      Authorization: `Bearer ${import.meta.env.VITE_GITHUB_TOKEN}`,
     },
     body: JSON.stringify({
       query: query,
