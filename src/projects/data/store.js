@@ -1,28 +1,9 @@
 import { createStore } from 'zustand/vanilla'
 import { searchRepositories } from '/src/projects/data/data-service'
 
-/**
- * @typedef {Object} Repository
- * @property {string} name
- * @property {string} description
- * @property {string} createdAt
- * @property {string} pushedAt
- * @property {string[]} languages
- */
-
-/**
- * @typedef {Object} PageInfo
- * @property {boolean} hasNextPage
- * @property {string} endCursor
- */
-
-/**
- * @typedef {Object} RepositoryStore
- * @property {Repository[] | null} repositories - List of repositories.
- * @property {PageInfo | null} pageInfo - Pagination information.
- * @property {string | null} errors - Errors from the repository search.
- * @property {(query: string) => Promise<void>} searchRepositories - Search function.
- */
+/** @typedef {import('./types').PageInfo} PageInfo */
+/** @typedef {import('./types').RepositoryStore} Repository */
+/** @typedef {import('./types').RepositoryStore} RepositoryStore */
 
 /** @type {import('zustand/vanilla').StoreApi<RepositoryStore>} */
 export const useRepositoryStore = createStore((set) => ({
@@ -32,12 +13,13 @@ export const useRepositoryStore = createStore((set) => ({
   searchRepositories: async (query) => {
     searchRepositories(query)
       .then((results) => {
-        /** @type {Object[]} */
         const rawData = results.data.user.repositories.nodes
+        /** @type {Repository[]} */
+        const repositories = enrichRepositoryData(rawData)
         /** @type {PageInfo} */
         const pageInfo = results.data.user.repositories.pageInfo
         set({
-          repositories: enrichRepositoryData(rawData),
+          repositories: repositories,
           pageInfo: pageInfo,
         })
       })
