@@ -1,7 +1,7 @@
 /** @typedef {import('./data/types').RepositoryStore} RepositoryStore */
 
 /** @param {RepositoryStore} state */
-export const loadProjects = (state) => {
+export const loadProjects = (state, container) => {
   if (state.errors) {
     console.error(`${state.errors.name}: ${state.errors.message}`)
   }
@@ -9,4 +9,5 @@ export const loadProjects = (state) => {
   const pageInfo = state.pageInfo
   console.log(projects)
   console.log(pageInfo)
+  console.log(container)
 }
