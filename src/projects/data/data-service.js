@@ -17,7 +17,7 @@ const query = async (query) => {
       variables: { after },
     }),
   })
-  if (response.status !== 200) {
+  if (!response.ok) {
     throw new Error(`${response.status}\n${response.statusText}`)
   }
   const data = await response.json()
