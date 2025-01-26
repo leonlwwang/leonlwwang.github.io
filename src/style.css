@@ -19,6 +19,20 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Apercu Bold';
+  src: url('/fonts/apercu-bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Apercu';
+  src: url('/fonts/apercu.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -81,8 +95,21 @@ h6 {
   font-family: var(--secondary-font);
 }
 
-p {
+h3[title] {
+  font-family: 'Apercu Bold', Arial, Helvetica, sans-serif;
+  letter-spacing: -2px;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  margin: 0 auto;
+}
+
+p[desc] {
+  font-family: 'Apercu', Arial, Helvetica, sans-serif;
   font-size: small;
+  letter-spacing: -1px;
+  padding-left: 1rem;
+  padding-top: 0.15rem;
+  margin: 0 auto;
 }
 
 svg {
@@ -305,7 +332,7 @@ div[repo]::after {
 }
 
 div[loaded] {
-  border-color: rgba(0, 0, 0, 0.7);
+  border-color: rgba(0, 0, 0, 1);
   background-color: white;
 }
 
@@ -332,7 +359,7 @@ div[loaded] {
     transition: all 0.5s;
   }
   div[loaded].dark {
-    border-color: rgba(255, 255, 255, 0.4) !important;
+    border-color: rgba(255, 255, 255, 1) !important;
     background-color: rgba(62, 47, 48, 0.75) !important;
     transition: all 0.5s;
   }
