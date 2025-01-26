@@ -304,6 +304,11 @@ div[repo]::after {
   content: '';
 }
 
+div[loaded] {
+  border-color: rgba(0, 0, 0, 0.7);
+  background-color: white;
+}
+
 @media (prefers-color-scheme: dark) {
   :root.dark {
     color: var(--dark-text);
@@ -324,6 +329,11 @@ div[repo]::after {
       rgba(62, 47, 48, 0.5) 60%,
       rgba(35, 26, 27, 0) 100%
     );
+    transition: all 0.5s;
+  }
+  div[loaded].dark {
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    background-color: rgba(62, 47, 48, 0.75) !important;
     transition: all 0.5s;
   }
 }

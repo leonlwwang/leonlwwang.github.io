@@ -22,15 +22,16 @@ const fillContainer = (container, data) => {
 const clearLoadingStatus = (container) => {
   container.style.borderColor = 'rgba(0, 0, 0, 0.7)'
   container.style.backgroundColor = 'white'
+  container.setAttribute('loaded', '')
   removeAfter('div[repo]')
 }
 
 const removeAfter = (className) => {
-  const style = document.createElement('style');
+  const style = document.createElement('style')
   style.textContent = `
     ${className}::after {
       content: none !important;
     }
-  `;
-  document.head.appendChild(style);
+  `
+  document.head.appendChild(style)
 }
