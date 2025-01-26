@@ -27,6 +27,6 @@ await loadPage('/src/index/profile.html', 'div[index]').then(() => {
 
 await loadPage('/src/projects/projects.html', 'div[projects]').then(() => {
   useRepositoryStore.subscribe((state) =>
-    loadProjects(state, document.querySelector('div[projects]'))
+    loadProjects(state, Array.from(document.querySelectorAll('div[repo]')))
   )
 })

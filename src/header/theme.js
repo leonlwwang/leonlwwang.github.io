@@ -19,8 +19,6 @@ let dark = true
 const enableDarkMode = () => {
   const root = document.documentElement
   root.classList.add('dark')
-  const skeletons = Array.from(document.querySelectorAll('div[skeleton]'))
-  skeletons.map((skeleton) => skeleton.classList.add('dark'))
   const skeletonBorders = Array.from(document.querySelectorAll('div[repo]'))
   skeletonBorders.map((border) => border.classList.add('dark'))
 }
@@ -28,8 +26,6 @@ const enableDarkMode = () => {
 const disableDarkMode = () => {
   const root = document.documentElement
   root.classList.remove('dark')
-  const skeletons = Array.from(document.querySelectorAll('div[skeleton]'))
-  skeletons.map((skeleton) => skeleton.classList.remove('dark'))
   const skeletonBorder = Array.from(document.querySelectorAll('div[repo]'))
   skeletonBorder.map((skeleton) => skeleton.classList.remove('dark'))
 }

@@ -277,7 +277,22 @@ div[repo] {
   overflow: hidden;
   border: 1px solid;
   border-color: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
+  border-radius: 8px;
+}
+
+div[repotest] {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  flex-direction: column;
+  box-shadow: var(--dark-theme) 0px 0px 0px;
+  position: relative;
+  padding: 0px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
 }
 
 @keyframes shimmer {
@@ -286,7 +301,7 @@ div[repo] {
   }
 }
 
-div[skeleton]::after {
+div[repo]::after {
   position: absolute;
   top: 0;
   right: 0;
