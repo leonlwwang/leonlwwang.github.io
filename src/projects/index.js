@@ -20,7 +20,6 @@ const fillContainer = (container, data) => {
 }
 
 const clearLoadingStatus = (container) => {
-  container.classList.remove('skeleton')
   container.style.borderColor = 'rgba(0, 0, 0, 0.7)'
   container.style.backgroundColor = 'white'
   removeAfter('div[repo]')
