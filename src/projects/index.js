@@ -67,14 +67,12 @@ const createLanguagesUi = (languages) => {
 
 /** @param {HTMLDivElement} container */
 const clearLoadingStatus = (container) => {
-  container.style.borderColor = 'rgba(0, 0, 0, 0.7)'
-  container.style.backgroundColor = 'white'
   container.setAttribute('loaded', '')
-  removeAfter('div[repo]')
+  removeSkeleton('div[repo]')
 }
 
 /** @param {string} className */
-const removeAfter = (className) => {
+const removeSkeleton = (className) => {
   const style = document.createElement('style')
   style.textContent = `
     ${className}::after {

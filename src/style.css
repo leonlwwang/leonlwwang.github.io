@@ -334,6 +334,15 @@ div[repo]::after {
 div[loaded] {
   border-color: rgba(0, 0, 0, 1);
   background-color: white;
+  box-shadow: var(--dark-theme) 0px 0px 0px;
+  transform: translate(0px, 0px);
+  transition: box-shadow 200ms, transform 200ms;
+}
+
+div[loaded]:hover {
+  box-shadow: var(--dark-theme) -5px 5px 0px;
+  transform: translate(5px, -5px);
+  transition: box-shadow 200ms, transform 200ms;
 }
 
 @media (prefers-color-scheme: dark) {
