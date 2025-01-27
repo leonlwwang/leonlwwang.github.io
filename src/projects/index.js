@@ -44,16 +44,16 @@ const injectData = (container, data) => {
  * @returns {HTMLDivElement}
  */
 const createProjectUi = (project) => {
-  const div = document.createElement('div')
+  const ui = document.createElement('div')
   const heading = document.createElement('h3')
   const p = document.createElement('p')
   heading.setAttribute('title', '')
   heading.textContent = project.name
   p.setAttribute('desc', '')
   p.textContent = project.description
-  div.appendChild(heading)
-  div.appendChild(p)
-  return div
+  ui.appendChild(heading)
+  ui.appendChild(p)
+  return ui
 }
 
 /**
@@ -61,8 +61,13 @@ const createProjectUi = (project) => {
  * @returns {HTMLDivElement}
  */
 const createLanguagesUi = (languages) => {
-  const div = document.createElement('div')
-  return div
+  const ui = document.createElement('div')
+  const img = document.createElement('img')
+  img.setAttribute('checkers', '')
+  img.src = '/assets/bar.svg'
+  img.alt = ''
+  ui.appendChild(img)
+  return ui
 }
 
 /** @param {HTMLDivElement} container */
