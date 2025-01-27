@@ -19,23 +19,11 @@ let dark = true
 const enableDarkMode = () => {
   const root = document.documentElement
   root.classList.add('dark')
-  const skeletonBorders = Array.from(document.querySelectorAll('div[repo]'))
-  skeletonBorders.map((border) => border.classList.add('dark'))
-  const loadedRepos = Array.from(document.querySelectorAll('div[loaded]'))
-  loadedRepos.map((repo) => repo.classList.add('dark'))
-  const checkers = Array.from(document.querySelectorAll('img[checkers]'))
-  checkers.map((checker) => checker.classList.add('dark'))
 }
 
 const disableDarkMode = () => {
   const root = document.documentElement
   root.classList.remove('dark')
-  const skeletonBorder = Array.from(document.querySelectorAll('div[repo]'))
-  skeletonBorder.map((skeleton) => skeleton.classList.remove('dark'))
-  const loadedRepos = Array.from(document.querySelectorAll('div[loaded]'))
-  loadedRepos.map((repo) => repo.classList.remove('dark'))
-  const checkers = Array.from(document.querySelectorAll('img[checkers]'))
-  checkers.map((checker) => checker.classList.remove('dark'))
 }
 
 export const loadTheme = (gl, program) => {

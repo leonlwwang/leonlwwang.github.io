@@ -354,14 +354,17 @@ div[loaded]:hover {
     color: var(--dark-text);
     background-color: var(--dark-theme);
     stroke: var(--dark-text);
-    transition: all 0.5s;
+    transition:
+      color 0.5s,
+      background-color 0.5s,
+      stroke 0.5;
     border-color: rgba(255, 255, 255, 0.1);
   }
-  div[repo].dark {
+  .dark div[repo] {
     border-color: rgba(255, 255, 255, 0.03);
-    transition: all 0.5s;
+    transition: border-color 0.5s;
   }
-  div[repo].dark::after {
+  .dark div[repo]::after {
     background-image: linear-gradient(
       90deg,
       rgba(35, 26, 27, 0) 0%,
@@ -369,9 +372,9 @@ div[loaded]:hover {
       rgba(62, 47, 48, 0.5) 60%,
       rgba(35, 26, 27, 0) 100%
     );
-    transition: all 0.5s;
+    transition: background-image 0.5s;
   }
-  div[loaded].dark {
+  .dark div[loaded] {
     box-shadow: var(--light-theme) 0px 0px 0px !important;
     border-color: rgba(255, 255, 255, 1) !important;
     background-color: rgba(62, 47, 48, 0.75) !important;
@@ -379,14 +382,14 @@ div[loaded]:hover {
       box-shadow 200ms,
       transform 200ms;
   }
-  div[loaded]:hover.dark {
+  .dark div[loaded]:hover {
     box-shadow: var(--light-theme) -5px 5px 0px !important;
     transform: translate(5px, -5px) !important;
     transition:
       box-shadow 200ms,
       transform 200ms;
   }
-  img[checkers].dark {
+  .dark img[checkers] {
     filter: invert(1);
   }
 }
