@@ -396,6 +396,33 @@ img[checkers] {
   padding-right: 1rem;
 }
 
+div[chips] {
+  align-self: baseline;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 0.5rem;
+  gap: 10px;
+}
+
+div[chips] > div {
+  width: auto;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 8px;
+}
+
+p[chiptext] {
+  color: black;
+  font-family: var(--secondary-font);
+  font-size: 11px;
+  margin: 0 auto;
+}
+
 @media only screen and (min-width: 1024px) {
   li[repoelement] {
     grid-column-end: span 4;

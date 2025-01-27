@@ -1,6 +1,13 @@
+import languageJson from '/src/projects/data/languages.json'
+
 /** @typedef {import('./data/types').PageInfo} PageInfo */
 /** @typedef {import('./data/types').Repository} Repository */
 /** @typedef {import('./data/types').RepositoryStore} RepositoryStore */
+/** @typedef {import('./data/types').Language} Language */
+/** @typedef {import('./data/types').LanguageMap} LanguageMap */
+
+/** @type {LanguageMap} */
+const languageMap = languageJson
 
 /**
  * Inject repository content into available containers.
@@ -29,6 +36,23 @@ const fillContainer = (container, data) => {
   console.log(data)
 }
 
+/** @param {HTMLDivElement} container */
+const clearLoadingStatus = (container) => {
+  container.setAttribute('loaded', '')
+  removeSkeleton('div[repo]')
+}
+
+/** @param {string} className */
+const removeSkeleton = (className) => {
+  const style = document.createElement('style')
+  style.textContent = `
+    ${className}::after {
+      content: none !important;
+    }
+  `
+  document.head.appendChild(style)
+}
+
 /**
  * Inject repository data into the UI container.
  * @param {HTMLDivElement} container
@@ -50,7 +74,7 @@ const createProjectUi = (project) => {
   heading.setAttribute('title', '')
   heading.textContent = project.name
   p.setAttribute('desc', '')
-  p.textContent = project.description
+  p.textContent = project.description ?? '\u00A0'
   ui.appendChild(heading)
   ui.appendChild(p)
   return ui
@@ -67,22 +91,31 @@ const createLanguagesUi = (languages) => {
   img.src = '/assets/bar.svg'
   img.alt = ''
   ui.appendChild(img)
+  const chips = languages
+    .filter((language) => language in languageMap)
+    .sort((a, b) => languageMap[a].weight - languageMap[b].weight)
+    .map((language) => createChip(language))
+  const chipsContainer = document.createElement('div')
+  chipsContainer.setAttribute('chips', '')
+  chips.forEach((chip) => {
+    chipsContainer.appendChild(chip)
+  })
+  ui.appendChild(chipsContainer)
   return ui
 }
 
-/** @param {HTMLDivElement} container */
-const clearLoadingStatus = (container) => {
-  container.setAttribute('loaded', '')
-  removeSkeleton('div[repo]')
-}
-
-/** @param {string} className */
-const removeSkeleton = (className) => {
-  const style = document.createElement('style')
-  style.textContent = `
-    ${className}::after {
-      content: none !important;
-    }
-  `
-  document.head.appendChild(style)
+/**
+ * @param {string} language
+ * @returns {HTMLDivElement}
+ */
+const createChip = (language) => {
+  const chip = document.createElement('div')
+  const chipData = languageMap[language]
+  const p = document.createElement('p')
+  p.setAttribute('chiptext', '')
+  p.textContent = chipData.name
+  chip.appendChild(p)
+  chip.style.borderColor = chipData.color
+  chip.style.backgroundColor = chipData.color
+  return chip
 }
