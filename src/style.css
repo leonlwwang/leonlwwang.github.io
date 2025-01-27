@@ -336,13 +336,17 @@ div[loaded] {
   background-color: white;
   box-shadow: var(--dark-theme) 0px 0px 0px;
   transform: translate(0px, 0px);
-  transition: box-shadow 200ms, transform 200ms;
+  transition:
+    box-shadow 200ms,
+    transform 200ms;
 }
 
 div[loaded]:hover {
   box-shadow: var(--dark-theme) -5px 5px 0px;
   transform: translate(5px, -5px);
-  transition: box-shadow 200ms, transform 200ms;
+  transition:
+    box-shadow 200ms,
+    transform 200ms;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -368,9 +372,17 @@ div[loaded]:hover {
     transition: all 0.5s;
   }
   div[loaded].dark {
+    box-shadow: var(--light-theme) 0px 0px 0px !important;
     border-color: rgba(255, 255, 255, 1) !important;
     background-color: rgba(62, 47, 48, 0.75) !important;
     transition: all 0.5s;
+  }
+  div[loaded]:hover.dark {
+    box-shadow: var(--light-theme) -5px 5px 0px !important;
+    transform: translate(5px, -5px) !important;
+    transition:
+      box-shadow 200ms,
+      transform 200ms;
   }
 }
 
