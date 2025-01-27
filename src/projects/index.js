@@ -95,6 +95,7 @@ const createLanguagesUi = (languages) => {
     .filter((language) => language in languageMap)
     .sort((a, b) => languageMap[a].weight - languageMap[b].weight)
     .map((language) => createChip(language))
+    .slice(0, 3)
   const chipsContainer = document.createElement('div')
   chipsContainer.setAttribute('chips', '')
   chips.forEach((chip) => {

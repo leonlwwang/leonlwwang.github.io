@@ -1,4 +1,9 @@
 {
+  "GLSL": {
+    "name": "webgl",
+    "color": "#68ba7f",
+    "weight": 1
+  },
   "JavaScript": {
     "name": "js",
     "color": "#efdb50",

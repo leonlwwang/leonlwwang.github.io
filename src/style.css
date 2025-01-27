@@ -396,7 +396,7 @@ div[loaded]:hover {
 
 img[checkers] {
   width: 100%;
-  height: 1px;
+  height: 5px;
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -455,6 +455,10 @@ p[name] {
 }
 
 @media only screen and (max-width: 768px) {
+  img[checkers] {
+    height: 1px;
+  }
+
   li[repoelement] {
     grid-column-end: span 12;
   }
