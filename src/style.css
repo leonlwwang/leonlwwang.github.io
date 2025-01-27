@@ -375,7 +375,9 @@ div[loaded]:hover {
     box-shadow: var(--light-theme) 0px 0px 0px !important;
     border-color: rgba(255, 255, 255, 1) !important;
     background-color: rgba(62, 47, 48, 0.75) !important;
-    transition: all 0.5s;
+    transition:
+      box-shadow 200ms,
+      transform 200ms;
   }
   div[loaded]:hover.dark {
     box-shadow: var(--light-theme) -5px 5px 0px !important;
