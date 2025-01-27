@@ -423,6 +423,12 @@ p[chiptext] {
   margin: 0 auto;
 }
 
+p[name] {
+  font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+  font-size: 10px;
+  margin-bottom: 5rem;
+}
+
 @media only screen and (min-width: 1024px) {
   li[repoelement] {
     grid-column-end: span 4;
