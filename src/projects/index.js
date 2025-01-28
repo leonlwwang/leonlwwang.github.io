@@ -9,6 +9,8 @@ import languageJson from '/src/projects/data/languages.json'
 /** @type {LanguageMap} */
 const languageMap = languageJson
 
+const profileUrl = 'https://github.com/leonlwwang/'
+
 /**
  * Inject repository content into available containers.
  * @param {RepositoryStore} state
@@ -32,8 +34,8 @@ export const loadProjects = (state, containers) => {
  */
 const fillContainer = (container, data) => {
   clearLoadingStatus(container)
+  injectUrl(container, data)
   injectData(container, data)
-  console.log(data)
 }
 
 /** @param {HTMLDivElement} container */
@@ -51,6 +53,24 @@ const removeSkeleton = (className) => {
     }
   `
   document.head.appendChild(style)
+}
+
+/**
+ * Inject project URL hyperlink into the container
+ * @param {HTMLDivElement} container
+ * @param {Repository} data
+ */
+const injectUrl = (container, data) => {
+  const child = container.parentElement
+  const parent = child.parentElement
+
+  const url = document.createElement('a')
+  url.href = data.homepageUrl || profileUrl + data.name
+  url.setAttribute('target', '_blank')
+  url.setAttribute('rel', 'noreferrer')
+
+  url.appendChild(child)
+  parent.appendChild(url)
 }
 
 /**

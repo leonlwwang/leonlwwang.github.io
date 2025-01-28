@@ -71,6 +71,10 @@ header {
   padding: 1.5rem;
 }
 
+a {
+  text-decoration: none;
+}
+
 a,
 button,
 svg[gift],
@@ -332,6 +336,7 @@ div[repo]::after {
 }
 
 div[loaded] {
+  height: inherit;
   border-color: rgba(0, 0, 0, 1);
   background-color: white;
   box-shadow: var(--dark-theme) 0px 0px 0px;
