@@ -4,6 +4,7 @@
  * @property {string} description
  * @property {string} createdAt
  * @property {string} pushedAt
+ * @property {string} url
  * @property {string[]} languages
  */
 

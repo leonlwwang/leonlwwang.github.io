@@ -31,6 +31,10 @@ export const useRepositoryStore = createStore((set) => ({
   },
 }))
 
+/**
+ * @param {Object} data
+ * @returns {Repository[]}
+ */
 const enrichRepositoryData = (data) => {
   /** @type {Repository[]} */
   const enrichedData = data.map((repo) => {
