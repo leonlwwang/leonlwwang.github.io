@@ -95,7 +95,7 @@ const createProjectUi = (project) => {
   heading.textContent = project.name
   if (project.name === 'leonlwwang.github.io') {
     heading.textContent = 'leonw.me'
-  }  
+  }
   p.setAttribute('desc', '')
   if (project.name === 'leonlwwang.github.io') {
     const text = document.createElement('span')
