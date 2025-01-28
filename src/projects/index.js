@@ -93,8 +93,21 @@ const createProjectUi = (project) => {
   const p = document.createElement('p')
   heading.setAttribute('title', '')
   heading.textContent = project.name
+  if (project.name === 'leonlwwang.github.io') {
+    heading.textContent = 'leonw.me'
+  }  
   p.setAttribute('desc', '')
-  p.textContent = project.description ?? '\u00A0'
+  if (project.name === 'leonlwwang.github.io') {
+    const text = document.createElement('span')
+    text.textContent = project.description
+    const caption = document.createElement('span')
+    caption.textContent = ' (you are here)'
+    caption.style.opacity = 0.6
+    p.appendChild(text)
+    p.appendChild(caption)
+  } else {
+    p.textContent = project.description ?? '\u00A0'
+  }
   ui.appendChild(heading)
   ui.appendChild(p)
   return ui
