@@ -65,9 +65,13 @@ const injectUrl = (container, data) => {
   const parent = child.parentElement
 
   const url = document.createElement('a')
-  url.href = data.homepageUrl || profileUrl + data.name
-  url.setAttribute('target', '_blank')
-  url.setAttribute('rel', 'noreferrer')
+  if (data.name === 'leonlwwang.github.io') {
+    url.href = '/'
+  } else {
+    url.href = data.homepageUrl || profileUrl + data.name
+    url.setAttribute('target', '_blank')
+    url.setAttribute('rel', 'noreferrer')
+  }
 
   url.appendChild(child)
   parent.appendChild(url)
