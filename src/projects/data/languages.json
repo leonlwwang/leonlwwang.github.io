@@ -1,0 +1,32 @@
+{
+  "GLSL": {
+    "name": "webgl",
+    "color": "#68ba7f",
+    "weight": 1
+  },
+  "JavaScript": {
+    "name": "js",
+    "color": "#efdb50",
+    "weight": 1
+  },
+  "HTML": {
+    "name": "html",
+    "color": "#f26524",
+    "weight": 2
+  },
+  "CSS": {
+    "name": "css",
+    "color": "#2565f2",
+    "weight": 3
+  },
+  "C++": {
+    "name": "c++",
+    "color": "#f34b7d",
+    "weight": 1
+  },
+  "C": {
+    "name": "c",
+    "color": "#bebebe",
+    "weight": 1
+  }
+}

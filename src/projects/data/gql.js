@@ -13,7 +13,8 @@ export const query = `
           description
           createdAt
           pushedAt
-          languages(first: 3) {
+          homepageUrl
+          languages(first: 5) {
             edges {
               node {
                 name

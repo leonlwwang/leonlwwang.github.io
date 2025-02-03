@@ -19,6 +19,24 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Apercu Bold';
+  src: url('/fonts/apercu-bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Apercu';
+  src: url('/fonts/apercu.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --primary-font: 'Fragment Mono', 'IBM Plex Mono', 'Courier New', Courier, monospace;
   --secondary-font: 'DM Mono', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -53,6 +71,10 @@ header {
   padding: 1.5rem;
 }
 
+a {
+  text-decoration: none;
+}
+
 a,
 button,
 svg[gift],
@@ -77,8 +99,21 @@ h6 {
   font-family: var(--secondary-font);
 }
 
-p {
+h3[title] {
+  font-family: 'Apercu Bold', Arial, Helvetica, sans-serif;
+  letter-spacing: -2px;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  margin: 0 auto;
+}
+
+p[desc] {
+  font-family: 'Apercu', Arial, Helvetica, sans-serif;
   font-size: small;
+  letter-spacing: -1px;
+  padding-left: 1rem;
+  padding-top: 0.15rem;
+  margin: 0 auto;
 }
 
 svg {
@@ -175,14 +210,10 @@ div[about-me] > p {
 
 div[about-me] {
   padding: 1rem;
-  margin-right: 5%;
-  margin-left: 2%;
 }
 
 canvas[stippler] {
   padding: 1rem;
-  margin-left: 5%;
-  margin-right: 2%;
 }
 
 button[resume] {
@@ -242,12 +273,175 @@ div[bar] {
   height: 0.1rem;
 }
 
+ul[repogrid] {
+  padding: 1rem;
+  grid-template-columns: repeat(12, minmax(0px, 1fr));
+  display: grid;
+  width: 100%;
+  gap: 2rem 2rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+}
+
+li[repoelement] {
+  grid-column-end: span 6;
+  grid-template-columns: minmax(0px, 1fr);
+  display: grid;
+  grid-row-end: span 1;
+}
+
+div[repobox] {
+  display: flex;
+  width: auto;
+  min-height: 150px;
+}
+
+div[repo] {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: inherit;
+  flex-direction: column;
+  position: relative;
+  padding: 0px;
+  overflow: hidden;
+  border: 1px solid;
+  border-color: rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+div[repo]::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(178, 167, 157, 0) 0%,
+    rgba(178, 167, 157, 0.1) 20%,
+    rgba(178, 167, 157, 0.3) 60%,
+    rgba(178, 167, 157, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+  content: '';
+}
+
+div[loaded] {
+  height: inherit;
+  border-color: rgba(0, 0, 0, 1);
+  background-color: white;
+  box-shadow: var(--dark-theme) 0px 0px 0px;
+  transform: translate(0px, 0px);
+  transition:
+    box-shadow 200ms,
+    transform 200ms;
+}
+
+div[loaded]:hover {
+  box-shadow: var(--dark-theme) -5px 5px 0px;
+  transform: translate(5px, -5px);
+  transition:
+    box-shadow 200ms,
+    transform 200ms;
+}
+
 @media (prefers-color-scheme: dark) {
   :root.dark {
     color: var(--dark-text);
     background-color: var(--dark-theme);
     stroke: var(--dark-text);
-    transition: all 0.5s;
+    transition:
+      color 0.5s,
+      background-color 0.5s,
+      stroke 0.5;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  .dark div[repo] {
+    border-color: rgba(255, 255, 255, 0.03);
+    transition: border-color 0.5s;
+  }
+  .dark div[repo]::after {
+    background-image: linear-gradient(
+      90deg,
+      rgba(35, 26, 27, 0) 0%,
+      rgba(62, 47, 48, 0.2) 20%,
+      rgba(62, 47, 48, 0.5) 60%,
+      rgba(35, 26, 27, 0) 100%
+    );
+    transition: background-image 0.5s;
+  }
+  .dark div[loaded] {
+    box-shadow: var(--light-theme) 0px 0px 0px !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+    background-color: rgba(62, 47, 48, 0.75) !important;
+    transition:
+      box-shadow 200ms,
+      transform 200ms;
+  }
+  .dark div[loaded]:hover {
+    box-shadow: var(--light-theme) -5px 5px 0px !important;
+    transform: translate(5px, -5px) !important;
+    transition:
+      box-shadow 200ms,
+      transform 200ms;
+  }
+  .dark img[checkers] {
+    filter: invert(1);
+  }
+}
+
+img[checkers] {
+  width: 100%;
+  height: 5px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+div[chips] {
+  align-self: baseline;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 0.5rem;
+  gap: 10px;
+}
+
+div[chips] > div {
+  width: auto;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 8px;
+}
+
+p[chiptext] {
+  color: black;
+  font-family: var(--secondary-font);
+  font-size: 11px;
+  margin: 0 auto;
+}
+
+p[name] {
+  font-family: 'IBM Plex Mono', 'Courier New', Courier, monospace;
+  font-size: 10px;
+  margin-bottom: 5rem;
+}
+
+@media only screen and (min-width: 1024px) {
+  li[repoelement] {
+    grid-column-end: span 4;
   }
 }
 
@@ -265,7 +459,19 @@ div[bar] {
   }
 }
 
-@media only screen and (max-aspect-ratio: 4 / 3) {
+@media only screen and (max-width: 768px) {
+  img[checkers] {
+    height: 1px;
+  }
+
+  li[repoelement] {
+    grid-column-end: span 12;
+  }
+
+  ul[repogrid] {
+    column-gap: min(9.09091%, 2rem);
+  }
+
   header {
     padding: 0.5rem;
   }
