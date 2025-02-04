@@ -33,7 +33,7 @@ self.onmessage = (event) => {
 
   /* update velocity on mouse collision */
   for (let i = 0; i < numCollisions; i++) {
-    const index = Atomics.load(collisions, i)
+    const index = collisions[i]
     const x = index
     const y = index + 1
     velocities[x] += mouseVelocity[0]
