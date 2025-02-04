@@ -70,7 +70,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
         sharedCollisionsBuffer,
         mousePositionBuffer,
         mouseVelocityBuffer,
-        gravityBuffer,
+        gravityBuffer
       )
       const newBuffer = initBuffer(gl, new Float32Array(sharedVertexBuffer))
       drawScene(gl, programInfo, newBuffer)
