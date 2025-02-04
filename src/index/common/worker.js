@@ -11,6 +11,35 @@ self.onmessage = (event) => {
     gravityBuffer,
   } = event.data
 
+  const status = calculateFrame(
+    sharedVertexBuffer,
+    sharedVelocityBuffer,
+    sharedCollisionsBuffer,
+    mousePositionBuffer,
+    mouseVelocityBuffer,
+    gravityBuffer
+  )
+  postMessage(status)
+}
+
+/**
+ * Calculates all point displacements for the next frame
+ * @param {SharedArrayBuffer | ArrayBuffer} sharedVertexBuffer
+ * @param {SharedArrayBuffer | ArrayBuffer} sharedVelocityBuffer
+ * @param {SharedArrayBuffer | ArrayBuffer} sharedCollisionsBuffer
+ * @param {ArrayBuffer} mousePositionBuffer
+ * @param {ArrayBuffer} mouseVelocityBuffer
+ * @param {ArrayBuffer} gravityBuffer
+ * @returns {boolean}
+ */
+export const calculateFrame = (
+  sharedVertexBuffer,
+  sharedVelocityBuffer,
+  sharedCollisionsBuffer,
+  mousePositionBuffer,
+  mouseVelocityBuffer,
+  gravityBuffer
+) => {
   const points = new Float32Array(sharedVertexBuffer)
   const velocities = new Float32Array(sharedVelocityBuffer)
   const collisions = new Uint32Array(sharedCollisionsBuffer)
@@ -56,5 +85,5 @@ self.onmessage = (event) => {
     }
   }
 
-  postMessage(true)
+  return true
 }

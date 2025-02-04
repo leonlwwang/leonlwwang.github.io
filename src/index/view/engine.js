@@ -12,7 +12,9 @@ export const enableGravity = (event) => {
 
 export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   const sharedBuffers = typeof SharedArrayBuffer !== 'undefined'
-  sharedBuffers ? console.log('Using shared buffers') : console.error('shared buffers are not supported')
+  sharedBuffers
+    ? console.log('Using shared buffers')
+    : console.error('shared buffers are not supported')
   const worker = new Worker(new URL('/src/index/common/worker.js', import.meta.url), {
     type: 'module',
   })
@@ -26,11 +28,17 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
 
   /* vertex physics */
   const gravityFlag = new Int8Array([0])
-  const sharedVertexBuffer = sharedBuffers ? new SharedArrayBuffer(vertices.byteLength) : new ArrayBuffer(vertices.byteLength)
+  const sharedVertexBuffer = sharedBuffers
+    ? new SharedArrayBuffer(vertices.byteLength)
+    : new ArrayBuffer(vertices.byteLength)
   const points = new Float32Array(sharedVertexBuffer)
   points.set(vertices)
-  const sharedVelocityBuffer = sharedBuffers ? new SharedArrayBuffer(vertices.byteLength) : new ArrayBuffer(vertices.byteLength)
-  const sharedCollisionsBuffer = sharedBuffers ? new SharedArrayBuffer(UINT_32 * (points.length / 2)) : new ArrayBuffer(UINT_32 * (points.length / 2))
+  const sharedVelocityBuffer = sharedBuffers
+    ? new SharedArrayBuffer(vertices.byteLength)
+    : new ArrayBuffer(vertices.byteLength)
+  const sharedCollisionsBuffer = sharedBuffers
+    ? new SharedArrayBuffer(UINT_32 * (points.length / 2))
+    : new ArrayBuffer(UINT_32 * (points.length / 2))
 
   const animate = () => {
     requestAnimationFrame(animate)
