@@ -2,6 +2,7 @@ import { MOUSE_TIMEOUT, UINT_32, WEIGHT } from '/src/index/common/math/constants
 import { drawScene } from '/src/index/view/stippler'
 import { initBuffer } from '/src/index/common/gl-setup'
 import { getNDCMousePosition, getPointerLocation } from '/src/index/common/math/utils'
+import { calculateFrame } from '/src/index/common/worker'
 
 let gravity = false
 
@@ -11,6 +12,7 @@ export const enableGravity = (event) => {
 }
 
 export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
+  const sharedBuffers = typeof SharedArrayBuffer !== 'undefined'
   const worker = new Worker(new URL('/src/index/common/worker.js', import.meta.url), {
     type: 'module',
   })
@@ -24,11 +26,17 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
 
   /* vertex physics */
   const gravityFlag = new Int8Array([0])
-  const sharedVertexBuffer = new SharedArrayBuffer(vertices.byteLength)
+  const sharedVertexBuffer = sharedBuffers
+    ? new SharedArrayBuffer(vertices.byteLength)
+    : new ArrayBuffer(vertices.byteLength)
   const points = new Float32Array(sharedVertexBuffer)
   points.set(vertices)
-  const sharedVelocityBuffer = new SharedArrayBuffer(vertices.byteLength)
-  const sharedCollisionsBuffer = new SharedArrayBuffer(UINT_32 * (points.length / 2))
+  const sharedVelocityBuffer = sharedBuffers
+    ? new SharedArrayBuffer(vertices.byteLength)
+    : new ArrayBuffer(vertices.byteLength)
+  const sharedCollisionsBuffer = sharedBuffers
+    ? new SharedArrayBuffer(UINT_32 * (points.length / 2))
+    : new ArrayBuffer(UINT_32 * (points.length / 2))
 
   const animate = () => {
     requestAnimationFrame(animate)
@@ -36,19 +44,33 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
     const mousePositionBuffer = mousePosition.buffer
     const mouseVelocityBuffer = mouseVelocity.buffer
     const gravityBuffer = gravityFlag.buffer
-    worker.postMessage({
-      sharedVertexBuffer,
-      sharedVelocityBuffer,
-      sharedCollisionsBuffer,
-      mousePositionBuffer,
-      mouseVelocityBuffer,
-      gravityBuffer,
-    })
-    worker.onmessage = (event) => {
-      if (event.data) {
-        const newBuffer = initBuffer(gl, points)
-        drawScene(gl, programInfo, newBuffer)
+    if (sharedBuffers) {
+      const message = {
+        sharedVertexBuffer,
+        sharedVelocityBuffer,
+        sharedCollisionsBuffer,
+        mousePositionBuffer,
+        mouseVelocityBuffer,
+        gravityBuffer,
       }
+      worker.postMessage(message)
+      worker.onmessage = (event) => {
+        if (event.data) {
+          const newBuffer = initBuffer(gl, points)
+          drawScene(gl, programInfo, newBuffer)
+        }
+      }
+    } else {
+      calculateFrame(
+        sharedVertexBuffer,
+        sharedVelocityBuffer,
+        sharedCollisionsBuffer,
+        mousePositionBuffer,
+        mouseVelocityBuffer,
+        gravityBuffer
+      )
+      const newBuffer = initBuffer(gl, new Float32Array(sharedVertexBuffer))
+      drawScene(gl, programInfo, newBuffer)
     }
   }
   animate()
