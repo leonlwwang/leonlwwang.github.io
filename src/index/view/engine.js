@@ -13,9 +13,6 @@ export const enableGravity = (event) => {
 
 export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   const sharedBuffers = typeof SharedArrayBuffer !== 'undefined'
-  sharedBuffers
-    ? console.log('Using shared buffers')
-    : console.error('shared buffers are not supported')
   const worker = new Worker(new URL('/src/index/common/worker.js', import.meta.url), {
     type: 'module',
   })
