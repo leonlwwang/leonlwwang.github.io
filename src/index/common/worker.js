@@ -1,5 +1,6 @@
 import { MOUSE_RANGE, GRAVITY } from '/src/index/common/math/constants'
 import { hitsWall, friction, limit } from '/src/index/common/math/physics'
+import { touchDevice } from '/src/index/view/engine'
 
 self.onmessage = (event) => {
   const {
