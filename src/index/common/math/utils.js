@@ -14,11 +14,11 @@ const cartesianToNDC = (gl, data) => {
 const getNDCMousePosition = (event, canvas) => {
   const rect = canvas.getBoundingClientRect()
 
-  const mouseX = event.clientX
-  const mouseY = event.clientY
+  const mouseX = event.clientX - rect.left
+  const mouseY = event.clientY - rect.top
 
-  const mouseNDCx = ((mouseX - rect.left) / canvas.width - 0.5) * 2
-  const mouseNDCy = ((mouseY - rect.top) / canvas.height - 0.5) * -2
+  const mouseNDCx = (mouseX / rect.width - 0.5) * 2
+  const mouseNDCy = (mouseY / rect.height - 0.5) * -2
 
   return new Float32Array([mouseNDCx, mouseNDCy])
 }
