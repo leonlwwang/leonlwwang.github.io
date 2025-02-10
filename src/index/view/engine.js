@@ -5,6 +5,7 @@ import { getNDCMousePosition, getPointerLocation } from '/src/index/common/math/
 import { calculateFrame } from '/src/index/common/worker'
 
 let gravity = false
+const touchDevice = window.matchMedia('(pointer: coarse)').matches
 
 export const enableGravity = (event) => {
   getPointerLocation(event)
@@ -26,6 +27,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
 
   /* vertex physics */
   const gravityFlag = new Int8Array([0])
+  const touchDeviceFlag = new Int8Array([Number(touchDevice)])
   const sharedVertexBuffer = sharedBuffers
     ? new SharedArrayBuffer(vertices.byteLength)
     : new ArrayBuffer(vertices.byteLength)
@@ -44,6 +46,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
     const mousePositionBuffer = mousePosition.buffer
     const mouseVelocityBuffer = mouseVelocity.buffer
     const gravityBuffer = gravityFlag.buffer
+    const touchDeviceBuffer = touchDeviceFlag.buffer
     if (sharedBuffers) {
       const message = {
         sharedVertexBuffer,
@@ -52,6 +55,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
         mousePositionBuffer,
         mouseVelocityBuffer,
         gravityBuffer,
+        touchDeviceBuffer,
       }
       worker.postMessage(message)
       worker.onmessage = (event) => {
@@ -67,7 +71,8 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
         sharedCollisionsBuffer,
         mousePositionBuffer,
         mouseVelocityBuffer,
-        gravityBuffer
+        gravityBuffer,
+        touchDeviceBuffer
       )
       const newBuffer = initBuffer(gl, new Float32Array(sharedVertexBuffer))
       drawScene(gl, programInfo, newBuffer)
@@ -75,26 +80,32 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   }
   animate()
 
-  canvas.addEventListener('pointermove', (event) => {
-    if (!mouseMove) {
-      mouseMove = true
-      previousMoveTime = Date.now()
-    }
+  if (!touchDevice) {
+    canvas.addEventListener('pointermove', (event) => {
+      if (!mouseMove) {
+        mouseMove = true
+        previousMoveTime = Date.now()
+      }
 
-    /* determine sampling rate */
-    const currentMoveTime = Date.now()
-    const time = (currentMoveTime - previousMoveTime) * WEIGHT
-    previousMoveTime = currentMoveTime
+      /* determine sampling rate */
+      const currentMoveTime = Date.now()
+      const time = (currentMoveTime - previousMoveTime) * WEIGHT
+      previousMoveTime = currentMoveTime
 
-    mousePosition = getNDCMousePosition(event, canvas)
-    mouseVelocity[0] = time === 0 ? 0 : mousePosition[0] / time
-    mouseVelocity[1] = time === 0 ? 0 : mousePosition[1] / time
+      mousePosition = getNDCMousePosition(event, canvas)
+      mouseVelocity[0] = time === 0 ? 0 : mousePosition[0] / time
+      mouseVelocity[1] = time === 0 ? 0 : mousePosition[1] / time
 
-    clearTimeout(movementTimer)
-    movementTimer = setTimeout(() => {
-      reset()
-    }, MOUSE_TIMEOUT)
-  })
+      clearTimeout(movementTimer)
+      movementTimer = setTimeout(() => {
+        reset()
+      }, MOUSE_TIMEOUT)
+    })
+  } else {
+    canvas.addEventListener('pointerdown', (event) => {
+      mousePosition = getNDCMousePosition(event, canvas)
+    })
+  }
 
   const reset = () => {
     mouseMove = false
