@@ -1,4 +1,9 @@
-import { MOUSE_RANGE, GRAVITY } from '/src/index/common/math/constants'
+import {
+  MOUSE_RANGE,
+  MOUSE_TAP_FORCE,
+  MOUSE_TAP_RANGE,
+  GRAVITY,
+} from '/src/index/common/math/constants'
 import { hitsWall, friction, limit } from '/src/index/common/math/physics'
 
 self.onmessage = (event) => {
@@ -54,11 +59,21 @@ export const calculateFrame = (
 
   /* get collisions */
   let j = 0
+  const forcesX = []
+  const forcesY = []
+  const radius = touchDevice == 0 ? MOUSE_RANGE : MOUSE_TAP_RANGE
   for (let i = 0; i < points.length; i += 2) {
     const dx = mousePosition[0] - points[i]
     const dy = mousePosition[1] - points[i + 1]
     const distance = Math.sqrt(dx * dx + dy * dy)
-    if (distance <= MOUSE_RANGE) {
+    if (distance <= radius) {
+      if (touchDevice == 1) {
+        const force = MOUSE_TAP_FORCE - distance / radius
+        const forceX = (force * (dx / distance)) / 1000
+        const forceY = (force * (dy / distance)) / 1000
+        forcesX.push(forceX)
+        forcesY.push(forceY)
+      }
       collisions[j] = i
       j += 1
     }
@@ -70,8 +85,13 @@ export const calculateFrame = (
     const index = collisions[i]
     const x = index
     const y = index + 1
-    velocities[x] += mouseVelocity[0]
-    velocities[y] += mouseVelocity[1]
+    if (touchDevice == 1) {
+      velocities[x] += forcesX[i]
+      velocities[y] += forcesY[i]
+    } else {
+      velocities[x] += mouseVelocity[0]
+      velocities[y] += mouseVelocity[1]
+    }
   }
 
   /* move vertices, check wall collisions */
