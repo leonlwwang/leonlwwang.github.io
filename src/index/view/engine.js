@@ -5,7 +5,6 @@ import { getNDCMousePosition, getPointerLocation } from '/src/index/common/math/
 import { calculateFrame } from '/src/index/common/worker'
 
 let gravity = false
-
 const touchDevice = window.matchMedia('(pointer: coarse)').matches
 
 export const enableGravity = (event) => {
@@ -28,6 +27,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
 
   /* vertex physics */
   const gravityFlag = new Int8Array([0])
+  const touchDeviceFlag = new Int8Array([Number(touchDevice)])
   const sharedVertexBuffer = sharedBuffers
     ? new SharedArrayBuffer(vertices.byteLength)
     : new ArrayBuffer(vertices.byteLength)
@@ -46,6 +46,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
     const mousePositionBuffer = mousePosition.buffer
     const mouseVelocityBuffer = mouseVelocity.buffer
     const gravityBuffer = gravityFlag.buffer
+    const touchDeviceBuffer = touchDeviceFlag.buffer
     if (sharedBuffers) {
       const message = {
         sharedVertexBuffer,
@@ -54,6 +55,7 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
         mousePositionBuffer,
         mouseVelocityBuffer,
         gravityBuffer,
+        touchDeviceBuffer,
       }
       worker.postMessage(message)
       worker.onmessage = (event) => {
@@ -69,7 +71,8 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
         sharedCollisionsBuffer,
         mousePositionBuffer,
         mouseVelocityBuffer,
-        gravityBuffer
+        gravityBuffer,
+        touchDeviceBuffer
       )
       const newBuffer = initBuffer(gl, new Float32Array(sharedVertexBuffer))
       drawScene(gl, programInfo, newBuffer)

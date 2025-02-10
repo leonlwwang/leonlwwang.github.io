@@ -9,6 +9,7 @@ self.onmessage = (event) => {
     mousePositionBuffer,
     mouseVelocityBuffer,
     gravityBuffer,
+    touchDeviceBuffer,
   } = event.data
 
   const status = calculateFrame(
@@ -17,7 +18,8 @@ self.onmessage = (event) => {
     sharedCollisionsBuffer,
     mousePositionBuffer,
     mouseVelocityBuffer,
-    gravityBuffer
+    gravityBuffer,
+    touchDeviceBuffer
   )
   postMessage(status)
 }
@@ -30,6 +32,7 @@ self.onmessage = (event) => {
  * @param {ArrayBuffer} mousePositionBuffer
  * @param {ArrayBuffer} mouseVelocityBuffer
  * @param {ArrayBuffer} gravityBuffer
+ * @param {ArrayBuffer} touchDeviceBuffer
  * @returns {boolean}
  */
 export const calculateFrame = (
@@ -38,7 +41,8 @@ export const calculateFrame = (
   sharedCollisionsBuffer,
   mousePositionBuffer,
   mouseVelocityBuffer,
-  gravityBuffer
+  gravityBuffer,
+  touchDeviceBuffer
 ) => {
   const points = new Float32Array(sharedVertexBuffer)
   const velocities = new Float32Array(sharedVelocityBuffer)
@@ -46,6 +50,7 @@ export const calculateFrame = (
   const mousePosition = new Float32Array(mousePositionBuffer)
   const mouseVelocity = new Float32Array(mouseVelocityBuffer)
   const gravity = new Int8Array(gravityBuffer)
+  const touchDevice = new Int8Array(touchDeviceBuffer)
 
   /* get collisions */
   let j = 0
