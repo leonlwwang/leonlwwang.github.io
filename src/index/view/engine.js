@@ -6,8 +6,6 @@ import { calculateFrame } from '/src/index/common/worker'
 
 let gravity = false
 
-export const touchDevice = window.matchMedia('(pointer: coarse)').matches
-
 export const enableGravity = (event) => {
   getPointerLocation(event)
   gravity = true

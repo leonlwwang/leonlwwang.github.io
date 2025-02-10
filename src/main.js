@@ -9,11 +9,13 @@ import { useRepositoryStore } from '/src/projects/data/store'
 import { query } from '/src/projects/data/gql'
 import { loadProjects } from '/src/projects/index'
 
+export const touchDevice = window.matchMedia('(pointer: coarse)').matches
+
 const repositoryStore = useRepositoryStore.getState()
 repositoryStore.searchRepositories(query)
 
 await loadPage('/src/index/profile.html', 'div[index]').then(() => {
-  if (!window.matchMedia('(pointer: coarse)').matches) {
+  if (touchDevice) {
     colorBtn()
   }
   enableDragDrop(
