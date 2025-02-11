@@ -210,6 +210,7 @@ div[about-me] > p {
 
 div[about-me] {
   padding: 1rem;
+  text-align: right;
 }
 
 canvas[stippler] {
