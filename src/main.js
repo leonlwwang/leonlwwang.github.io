@@ -13,9 +13,7 @@ const repositoryStore = useRepositoryStore.getState()
 repositoryStore.searchRepositories(query)
 
 await loadPage('/src/index/profile.html', 'div[index]').then(() => {
-  if (window.matchMedia('(pointer: coarse)').matches) {
-    colorBtn()
-  }
+  colorBtn()
   enableDragDrop(
     document.querySelector('img[pow-block]'),
     document.querySelector('canvas[stippler]'),
