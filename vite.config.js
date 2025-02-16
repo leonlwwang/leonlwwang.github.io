@@ -5,4 +5,8 @@ export default {
       'Cross-Origin-Embedder-Policy': 'require-corp',
     },
   },
+  build: {
+    minify: false, // Disables minification
+    sourcemap: true, // Enables source maps
+  },
 }
