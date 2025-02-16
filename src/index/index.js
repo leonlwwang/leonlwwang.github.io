@@ -6,7 +6,7 @@ import { loadTheme } from '/src/header/theme'
 
 export const render = async (canvas) => {
   /* unpack stippling data from binary */
-  const path = '/src/index/stippling.bin'
+  const path = '/stippling.bin'
   const arrBuffer = await initData(path)
   if (!arrBuffer) {
     console.error('Failed to load buffer')
