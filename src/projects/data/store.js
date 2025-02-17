@@ -1,5 +1,5 @@
 import { createStore } from 'zustand/vanilla'
-import { searchRepositories } from '/src/projects/data/data-service'
+import { searchRepositories } from '/src/projects/data/data-service.js'
 
 /** @typedef {import('./types').PageInfo} PageInfo */
 /** @typedef {import('./types').RepositoryStore} Repository */

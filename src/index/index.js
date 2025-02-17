@@ -1,8 +1,8 @@
-import { drawScene } from '/src/index/view/stippler'
-import { cartesianToNDC } from '/src/index/common/math/utils'
-import { loadPhysicsEngine } from '/src/index/view/engine'
-import { initData, initShaders, initBuffer } from '/src/index/common/gl-setup'
-import { loadTheme } from '/src/header/theme'
+import { drawScene } from '/src/index/view/stippler.js'
+import { cartesianToNDC } from '/src/index/common/math/utils.js'
+import { loadPhysicsEngine } from '/src/index/view/engine.js'
+import { initData, initShaders, initBuffer } from '/src/index/common/gl-setup.js'
+import { loadTheme } from '/src/header/theme.js'
 
 export const render = async (canvas) => {
   /* unpack stippling data from binary */

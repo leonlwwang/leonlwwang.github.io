@@ -1,8 +1,8 @@
-import { MOUSE_TIMEOUT, UINT_32, WEIGHT } from '/src/index/common/math/constants'
-import { drawScene } from '/src/index/view/stippler'
-import { initBuffer } from '/src/index/common/gl-setup'
-import { getNDCMousePosition, getPointerLocation } from '/src/index/common/math/utils'
-import { calculateFrame } from '/src/index/common/worker'
+import { MOUSE_TIMEOUT, UINT_32, WEIGHT } from '/src/index/common/math/constants.js'
+import { drawScene } from '/src/index/view/stippler.js'
+import { initBuffer } from '/src/index/common/gl-setup.js'
+import { getNDCMousePosition, getPointerLocation } from '/src/index/common/math/utils.js'
+import { calculateFrame } from '/src/index/common/worker.js'
 
 let gravity = false
 const touchDevice = window.matchMedia('(pointer: coarse)').matches

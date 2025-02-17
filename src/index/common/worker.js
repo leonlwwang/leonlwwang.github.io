@@ -3,8 +3,8 @@ import {
   MOUSE_TAP_FORCE,
   MOUSE_TAP_RANGE,
   GRAVITY,
-} from '/src/index/common/math/constants'
-import { hitsWall, friction, limit } from '/src/index/common/math/physics'
+} from '/src/index/common/math/constants.js'
+import { hitsWall, friction, limit } from '/src/index/common/math/physics.js'
 
 self.onmessage = (event) => {
   const {

@@ -1,4 +1,4 @@
-import { FRICTION, VELOCITY_MAX } from '/src/index/common/math/constants'
+import { FRICTION, VELOCITY_MAX } from '/src/index/common/math/constants.js'
 
 const hitsWall = (v) => {
   return v <= -1 || v >= 1
