@@ -1,11 +1,8 @@
-import { defineConfig } from 'vite'
-
-export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/leonlwwang.github.io/' : '/',
+export default {
   server: {
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp',
     },
   },
-}))
+}
