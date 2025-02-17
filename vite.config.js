@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/your-repo-name/' : '/',
+  base: mode === 'production' ? '/leonlwwang.github.io/' : '/',
   server: {
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
