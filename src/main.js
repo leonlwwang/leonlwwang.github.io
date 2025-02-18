@@ -1,4 +1,3 @@
-import '/src/style.css'
 import { colorBtn } from '/src/index/view/button.js'
 import { render } from '/src/index/index.js'
 import { enableDragDrop } from '/src/index/view/draggable.js'
