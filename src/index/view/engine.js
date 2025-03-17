@@ -80,32 +80,23 @@ export const loadPhysicsEngine = (gl, programInfo, canvas, vertices) => {
   }
   animate()
 
-  if (!touchDevice) {
-    canvas.addEventListener('pointermove', (event) => {
-      if (!mouseMove) {
-        mouseMove = true
-        previousMoveTime = Date.now()
-      }
-
-      /* determine sampling rate */
-      const currentMoveTime = Date.now()
-      const time = (currentMoveTime - previousMoveTime) * WEIGHT
-      previousMoveTime = currentMoveTime
-
-      mousePosition = getNDCMousePosition(event, canvas)
-      mouseVelocity[0] = time === 0 ? 0 : mousePosition[0] / time
-      mouseVelocity[1] = time === 0 ? 0 : mousePosition[1] / time
-
-      clearTimeout(movementTimer)
-      movementTimer = setTimeout(() => {
-        reset()
-      }, MOUSE_TIMEOUT)
-    })
-  } else {
-    canvas.addEventListener('pointerdown', (event) => {
-      mousePosition = getNDCMousePosition(event, canvas)
-    })
-  }
+  canvas.addEventListener('pointermove', (event) => {
+    if (!mouseMove) {
+      mouseMove = true
+      previousMoveTime = Date.now()
+    }
+    /* determine sampling rate */
+    const currentMoveTime = Date.now()
+    const time = (currentMoveTime - previousMoveTime) * WEIGHT
+    previousMoveTime = currentMoveTime
+    mousePosition = getNDCMousePosition(event, canvas)
+    mouseVelocity[0] = time === 0 ? 0 : mousePosition[0] / time
+    mouseVelocity[1] = time === 0 ? 0 : mousePosition[1] / time
+    clearTimeout(movementTimer)
+    movementTimer = setTimeout(() => {
+      reset()
+    }, MOUSE_TIMEOUT)
+  })
 
   const reset = () => {
     mouseMove = false

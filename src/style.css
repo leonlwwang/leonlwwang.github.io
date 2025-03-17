@@ -214,6 +214,7 @@ div[about-me] {
 }
 
 canvas[stippler] {
+  touch-action: none;
   padding: 1rem;
 }
 
