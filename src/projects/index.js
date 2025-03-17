@@ -1,4 +1,4 @@
-import languageJson from './data/languages.json' with { type: 'json' }
+import languageJson from '/src/projects/data/languages.json' with { type: 'json' }
 
 /** @typedef {import('./data/types').PageInfo} PageInfo */
 /** @typedef {import('./data/types').Repository} Repository */

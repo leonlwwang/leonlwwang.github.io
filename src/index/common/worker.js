@@ -71,12 +71,12 @@ export const calculateFrame = (
     const index = collisions[i]
     const x = index
     const y = index + 1
-    if (touchDevice) {
-      velocities[x] += 5 * mouseVelocity[0]
-      velocities[y] += 5 * mouseVelocity[1]
-    } else {
+    if (touchDevice == 0) {
       velocities[x] += mouseVelocity[0]
       velocities[y] += mouseVelocity[1]
+    } else {
+      velocities[x] += 5 * mouseVelocity[0]
+      velocities[y] += 5 * mouseVelocity[1]
     }
   }
 
